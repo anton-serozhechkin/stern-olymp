@@ -1,0 +1,185 @@
+.personal-area-layer {
+  background-color: white;
+  .content-layer {
+    .header {
+      .header-nav {
+        .header-item {
+          &:first-of-type {
+            opacity: 0;
+            z-index: -1000;
+          }
+        }
+      }
+      .dots-image {
+        display: none;
+      }
+    }
+  }
+}
+.personal-dialog-layer {
+  .content {
+    .profile-wrapper {
+      width: 60%;
+      height: 75%;
+      position: relative;
+      border-radius: 35px;
+      background: rgb(246,229,92);
+      background: linear-gradient(180deg, rgba(246,229,92,1) 0%, rgba(97,163,187,1) 50%, rgba(183,82,83,1) 100%);
+      .profile-box {
+        width: 85%;
+        margin-left: auto;
+        background-color: $yellow;
+        border-radius: 35px;
+        height: 100%;
+        position: relative;
+        .top {
+          position: absolute;
+          top: 5%;
+          right: 10%;
+          p {
+            font-size: 36px;
+            font-weight: 700;
+          }
+          display: flex;
+          .image {
+            margin-left: 60px;
+            position: relative;
+            bottom: 6px;
+            .bg {
+              position: absolute;
+              img {
+                width: 50px;
+                height: 50px;
+              }
+            }
+            .result {
+              position: relative;
+              img {
+                top: -10px;
+                left: 10px;
+                position: absolute;
+                height: 50px;
+                width: 50px;
+              }
+            }
+          }
+        }
+      }
+      .left-side {
+        position: absolute;
+        height: 100%;
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        font-weight: 700;
+        font-size: 18px;
+        .profile-short-info {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .profile-name {
+            color:#2C1B77;
+            text-align: center;
+            position: relative;
+            bottom: 35px;
+            margin-bottom: 15px;
+          }
+          .settings-button {
+            a {
+              color:#2C1B77;
+              img {
+                margin-right: 6px;
+                position: relative;
+                top: 10px;
+                height: 35px;
+                width: 35px;
+              }
+
+              text-decoration: none;
+            }
+          }
+          .profile-image {
+            margin-top: 5vh;
+            img {
+              height: 135px;
+              width: 135px;
+            }
+          }
+        }
+        .profile-controll {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          a {
+            color:#2C1B77;
+            transition: ease-in-out all .2s;
+            &:hover {
+              color:white;
+              transition: ease-in-out all .2s;
+            }
+            img {
+              margin-right: 6px;
+              position: relative;
+              top: 10px;
+              height: 35px;
+              width: 35px;
+            }
+            margin: 10px 0;
+            text-decoration: none;
+            text-transform: capitalize;
+          }
+        }
+      }
+      .profile-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        form {
+          height: 65%;
+          width: 45%;
+          .row {
+            display: flex;
+            margin: 8px 0;
+            .col {
+              width: 190px;
+              margin-right: 23px;
+            }
+            label {
+              font-size: 20px;
+            }
+            input {
+              border: none;
+              max-width: 190px;
+              margin: 0 10px;
+              font-size: 18px;
+              border-bottom: solid 4px $darkRed;
+              font-weight: 700;
+              color:#2C1B77;
+              outline: none;
+              background-color: transparent;
+              &:first-of-type {
+                margin-left: 0;
+              }
+              &:last-of-type {
+                margin-right: 0;
+              }
+            }
+          }
+          button {
+            background-color: $darkRed;
+            width: 100%;
+            border: none;
+            padding: 3vh 0;
+            cursor: pointer;
+            margin-top: 25px;
+            color:white;
+            font-size: 46px;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+}

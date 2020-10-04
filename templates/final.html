@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Начало олимпиады - Штерн{% endblock %}
+{% block content %}
+
+<img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
+<div class="desktop-nav">
+    <div class="nav-logo">
+        <a href="">
+            <img src="{% static 'images/shtern-logo.svg' %}" alt="">
+            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
+        </a>
+    </div>
+  
+    <ul class="desktop-nav-list">
+
+        <li class="desktop-nav-item">
+            <a href="/">
+                <img src="{% static 'images/logo-icon.svg' %}" alt="">
+                Главная
+            </a>
+        </li>
+        <li class="desktop-nav-item desktop-nav-item_active">
+            <a href="">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Олимпиада
+            </a>
+        </li>
+        <li class="desktop-nav-item ">
+            <a href="/profile">
+                <img src="{% static 'images/profile-icon.svg' %}" alt="">
+                Профиль
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="/documents">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    </ul>
+    <div class="desktop-nav-social">
+        <div class="site-link">
+            <a href="https://www.schoolofsciences.ru">
+                www.schoolofsciences.ru
+            </a>
+        </div>
+        <ul class="desktop-nav-social_list">
+            <li>
+                <a href="https://vk.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="https://instagram.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="dialog-layer index-layer ">
+    <div class="content">
+        <div class="box">
+            <div class="title">
+                <img class="congatulation-image" src="{% static 'images/congratulation-text.svg' %}" alt="">
+            </div>
+            <div class="description">
+                По завершении олимпиады <br>
+                мы обязательно пришлем результаты <br>
+                Вам на почту
+            </div>
+            <div class="image">
+                <img id="cosmoman" src="{% static 'images/cosmoman.svg' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-layer final-bg-layer">
+    <div class="content">
+        <img src="{% static 'images/rocket.svg' %}" id="rocket-image" alt="">
+        <img src="{% static 'images/object.svg' %}" id="object-image" alt="">
+    </div>
+</div>
+<div class="template-wrap index-layer final-layer">
+    <div class="content-layer">
+        <div class="site-visit">
+            <div class="social-links">
+            <ul class="social-list">
+                <li class="social-item">
+                    <a class="social-link" href="https://vk.com/schoolofsciences/">
+                        <img class="social-image vk-white" src="{% static 'images/social-icon-vk-white.svg' %}" alt="">
+                    </a>
+                </li>
+                <li class="social-item">
+                    <a class="social-link" href="https://instagram.com/schoolofsciences/">
+                        <img class="social-image instagram-white" src="{% static 'images/social-icon-instagram-white.svg' %}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+            <p>Посетите наш сайт :)</p>
+            <p><a class="site-visit-link" href="https://schoolofsciences.ru/">www.schoolofsciences.ru</a></p>
+         </div>
+       
+    </div>
+</div>
+<footer class="footer" id="footer">
+    <div class="footer-images">
+        <img class="stripes" src="{% static 'images/bg-layer-7.svg' %}" alt="">
+    </div>
+    <div class="content">
+        <p>
+            <a href="#">
+                Политика конфиденциальности
+            </a>
+        </p>
+        <p>
+            <a href="#">
+                Соглашение
+            </a>
+        </p>
+    </div>
+    <div class="copyright">
+        <p>COPYRIGHT &#169;2020 <span>Школа точных наук "ШТЕРН"</span></p>
+    </div>
+
+</footer>
+
+
+<div class="mobile-nav">
+    <ul class="mobile-nav-list">
+    <div class="mobile-nav-top">
+        <img src="{% static 'images/mobile-nav-figure.png' %}">
+    </div>
+        <li class="mobile-nav-item">
+            <a href="/">
+                <img src="{% static 'images/mobile-nav-ico-mainPage-inactive.svg' %}" alt="" class="mobile-nav-image">
+            </a>
+        </li>
+        <li class="mobile-nav-item">
+            <a href="/payment">
+                <img src="{% static 'images/mobile-nav-ico-toOlymp-active.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:0.6px;">
+            </a>
+        </li>
+        <li class="mobile-nav-item">
+            <a href="/profile">
+                <img src="{% static 'images/mobile-nav-ico-profile-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
+            </a>
+        </li>
+        <li class="mobile-nav-item" id="chatBtn">
+             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
+        </li>
+    </ul>
+</div>
+{% endblock content %}

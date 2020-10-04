@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    Начало олимпиады - Штерн
+{% endblock %}
+{% block content %}
+<div id="preloader" style="margin: -100px 0 0 0;"></div>
+<div class="dialog-layer index-layer">
+    <div class="content">
+        <div id="index-anim">                
+        </div>
+    </div>
+</div>
+<img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
+<div class="desktop-nav">
+    <div class="nav-logo">
+        <a href="">
+            <img src="{% static 'images/shtern-logo.svg' %}" alt="">
+            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
+        </a>
+    </div>
+    <ul class="desktop-nav-list">
+    {% if not request.user.is_authenticated %}
+        <li class="desktop-nav-item desktop-nav-item_active" style="cursor: pointer;">
+            <a class="sign-selector" >
+                <img src="{% static 'images/sign-icon.svg' %}" style="width:29px;" alt="">
+                <span>Вход/Регистрация</span>
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="/documents">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+        {% endif %}
+         {% if request.user.is_authenticated %}
+        <li class="desktop-nav-item desktop-nav-item_active">
+            <a href="/">
+                <img src="{% static 'images/logo-icon.svg' %}" alt="">
+                Главная
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="/payment">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Олимпиада
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="/profile">
+                <img src="{% static 'images/profile-icon.svg' %}" alt="">
+                Профиль
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="/documents">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    <div class="desktop-nav-social">
+        <div class="site-link">
+            <a href="https://www.schoolofsciences.ru">
+                www.schoolofsciences.ru
+            </a>
+        </div>
+        <ul class="desktop-nav-social_list">
+            <li>
+                <a href="https://vk.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="https://instagram.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="template-wrap index-layer index-page-layer">
+    <div class="content-layer">
+ <div class="site-visit" style="z-index: 21;">
+         <div class="social-links" style="z-index: 21;">
+            <ul class="social-list">
+                <li class="social-item">
+                    <a class="social-link" href="https://vk.com/schoolofsciences/">
+                        <img class="social-image vk vk-white" src="{% static 'images/social-icon-vk-white.svg' %}" alt="">
+                    </a>
+                </li>
+                <li class="social-item">
+                    <a class="social-link" href="https://instagram.com/schoolofsciences/">
+                        <img class="social-image instagram instagram-white"  src="{% static 'images/social-icon-instagram-white.svg' %}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+            <p>Посетите наш сайт :)</p>
+            <p><a class="site-visit-link" href="https://schoolofsciences.ru/">www.schoolofsciences.ru</a></p>
+             
+        </div>
+        </div>
+</div>
+ {% if not request.user.is_authenticated %}
+
+<div class="sign-menu">
+    <a class="sign-modal-Buttons sign-selector">
+        Вход
+    </a>
+    <a class="sign-modal-Buttons sign-selector">
+        Создать аккаунт
+    </a>
+</div>
+<img class="sign-menu-image" src="{% static 'images/sign-menu-image.png' %}">
+ {% endif %}
+
+<footer class="footer" id="footer">
+    <div class="footer-images">
+        <img class="stripes" id="index-footer-image"  style="opacity: 0;" src="{% static 'images/bg-layer-7.svg' %}" alt="">
+    </div>
+
+    <div class="content">
+        <p>
+            <a href="/documents">
+                Политика конфиденциальности
+            </a>
+        </p>
+        <p>
+            <a href="/documents">
+                Соглашение
+            </a>
+        </p>
+    </div>
+    <div class="copyright">
+        <p>COPYRIGHT &#169;2020 <span>Школа точных наук "ШТЕРН"</span></p>
+    </div>
+</footer>
+<div class="sign-modal-bg" id="signModalBg">
+    <div class="content">
+        <img src="{% static 'images/sign-modal-lines.svg' %}" alt="">
+    </div>
+</div>
+<div class="sign-modal" id="signModal">
+    <img class="bg-timer-layer-item" id="bg-timer-layer-item-1" src="{% static 'images/bg-layer-1.svg' %}" alt="">
+    <img class="bg-timer-layer-item" id="bg-timer-layer-item-2" src="{% static 'images/bg-layer-2.svg' %}" alt="">
+    <img class="bg-timer-layer-item" id="bg-timer-layer-item-3" src="{% static 'images/bg-layer-3.svg' %}" alt="">
+    <img class="bg-timer-layer-item" id="bg-timer-layer-item-4" src="{% static 'images/bg-layer-4.svg' %}" alt="">
+    <img class="bg-timer-layer-item" id="bg-timer-layer-item-5" src="{% static 'images/bg-layer-5.svg' %}" alt="">
+    <img class="bg-timer-layer-item" id="bg-timer-layer-item-6" src="{% static 'images/bg-layer-3.svg' %}" alt="">
+    <div class="content">
+   
+        <div class="modal">
+            <div class="navigation">
+                <a id="signInSelector" class="active">Войти</a>
+                <a id="signUpSelector">Регистрация</a>
+                <div class="close"><img src="{% static 'images/plus.svg' %}" id="sign-modal-close" alt=""></div>
+            </div>
+            <div class="forms" >
+                <form class="singInForm" action="/user/auth/" method="post" name="formtype" id="signInForm">
+                    <label for="signInUserName">Имя пользователя</label>
+                    {% csrf_token %}
+                    <br>
+                    <input type="text" name='username22' id="signInUserName">
+                    <br>
+                    <label for="signInPassword">Пароль</label>
+                    <br>
+                    <input type="password" name='password22' id="signInPassword">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="error-text">
+                                {{ message }}
+                            </div>    
+                            {% endfor %}
+                    {% endif %}
+                    <button type="submit" class="ripple" style="position: relative;">go!</button>
+                </form>
+                <form class="singInForm" action="/user/auth/" method="post" name="formtype" id="signUpForm">
+                    <div class="row">
+                        {% csrf_token %}
+                        <div class="item">
+                            <label for="signUpEmail">Логин</label>
+                            <br>
+                            <input type="text" name="username" id="signUpUserName">
+                        </div>
+                        <div class="item">
+                            <label for="signUpEmail">Пароль</label>
+                            <br>
+                            <input type="password" name="password" id="signUpPassword">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="item">
+                            <label for="signUpEmail">Почта</label>
+                            <br>
+                            <input type="text" name="email" id="signUpEmail">
+                        </div>
+                        <div class="item">
+                            <label for="signUpPhone">Номер телефона</label>
+                            <br>
+                            <input type="text" name="telephone_number" id="signUpPhone">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="item">
+                            <label for="signUpName">Имя</label>
+                            <br>
+                            <input type="text" name="first_name" id="signUpName">
+                        </div>
+                        <div class="item">
+                            <label for="signUpLastName">Фамилия</label>
+                            <br>
+                            <input type="text" name="last_name" id="signUpLastName">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="item">
+                            <label for="schoolClass">Класс</label>
+                            <br>
+                            <input type="text" name="class_number" id="schoolClass">
+                        </div>
+                        <div class="item">
+                            <label for="school">Школа</label>
+                            <br>
+                            <input type="text" name="name_school"id="school">
+                        </div>
+                    </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="error-text">
+                                {{ message }}
+                            </div>    
+                            {% endfor %}
+                    {% endif %}
+                    <button type="submit" class="ripple" style="position: relative;">go!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if request.user.is_authenticated %}
+<div class="mobile-nav">
+    <ul class="mobile-nav-list">
+    <div class="mobile-nav-top">
+        <img src="{% static 'images/mobile-nav-figure.png' %}">
+    </div>
+        <li class="mobile-nav-item">
+            <a href="/">
+                <img src="{% static 'images/mobile-nav-ico-mainPage-active.svg' %}" alt="" class="mobile-nav-image">
+            </a>
+        </li>
+        <li class="mobile-nav-item">
+            <a href="/payment">
+                <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:0.6px;">
+            </a>
+        </li>
+        <li class="mobile-nav-item">
+            <a href="/profile">
+                <img src="{% static 'images/mobile-nav-ico-profile-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
+            </a>
+        </li>
+        <li class="mobile-nav-item" id="chatBtn">
+             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
+        </li>
+    </ul>
+</div>
+{% endif %}
+<div id="preloader-bg" style="width: 100vw; height: 100vh; background: #f6e55c;z-index: 500;position: absolute;top: 0;">
+</div>	
+<script src="{% static 'node_modules/lottie-web/build/player/lottie.js' %}"></script>
+<script>
+    lottie.loadAnimation({
+        container: document.getElementById('preloader'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../../static/animations/data.json',
+    });
+</script>
+<script>
+    lottie.loadAnimation({
+        container: document.getElementById('index-anim'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../../static/animations/index.json',
+    });
+</script>
+{% endblock content %}
