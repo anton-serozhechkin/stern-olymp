@@ -24,8 +24,7 @@
                 Документы
             </a>
         </li>
-        {% endif %}
-         {% if request.user.is_authenticated %}
+    {% else %}
         <li class="desktop-nav-item">
             <a href="/">
                 <img src="{% static 'images/logo-icon.svg' %}" alt="">
@@ -50,7 +49,7 @@
                 Документы
             </a>
         </li>
-        {% endif %}
+    {% endif %}
     </ul>
     <div class="desktop-nav-social">
         <div class="site-link">

@@ -34,8 +34,7 @@
                 Документы
             </a>
         </li>
-        {% endif %}
-         {% if request.user.is_authenticated %}
+    {% else %}
         <li class="desktop-nav-item desktop-nav-item_active">
             <a href="/">
                 <img src="{% static 'images/logo-icon.svg' %}" alt="">
@@ -60,7 +59,7 @@
                 Документы
             </a>
         </li>
-        {% endif %}
+    {% endif %}
     </ul>
     <div class="desktop-nav-social">
         <div class="site-link">
@@ -165,17 +164,17 @@
                     <label for="signInUserName">Имя пользователя</label>
                     {% csrf_token %}
                     <br>
-                    <input type="text" name='username22' id="signInUserName">
+                    <input type="text" name='username_login' id="signInUserName">
                     <br>
                     <label for="signInPassword">Пароль</label>
                     <br>
-                    <input type="password" name='password22' id="signInPassword">
+                    <input type="password" name='password_login' id="signInPassword">
                     {% if messages %}
                         {% for message in messages %}
                             <div class="error-text">
                                 {{ message }}
                             </div>    
-                            {% endfor %}
+                        {% endfor %}
                     {% endif %}
                     <button type="submit" class="ripple" style="position: relative;">go!</button>
                 </form>
@@ -234,7 +233,7 @@
                             <div class="error-text">
                                 {{ message }}
                             </div>    
-                            {% endfor %}
+                        {% endfor %}
                     {% endif %}
                     <button type="submit" class="ripple" style="position: relative;">go!</button>
                 </form>
@@ -242,8 +241,6 @@
         </div>
     </div>
 </div>
-
-
 {% if request.user.is_authenticated %}
 <div class="mobile-nav">
     <ul class="mobile-nav-list">

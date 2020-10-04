@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Начало олимпиады - Штерн{% endblock %}
+{% block title %}
+    Конец олимпиады - Штерн
+{% endblock %}
 {% block content %}
-
 <img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
 <div class="desktop-nav">
     <div class="nav-logo">
@@ -10,10 +11,8 @@
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
             <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
-    </div>
-  
+    </div>  
     <ul class="desktop-nav-list">
-
         <li class="desktop-nav-item">
             <a href="/">
                 <img src="{% static 'images/logo-icon.svg' %}" alt="">
@@ -59,8 +58,6 @@
         </ul>
     </div>
 </div>
-
-
 <div class="dialog-layer index-layer ">
     <div class="content">
         <div class="box">
@@ -78,7 +75,6 @@
         </div>
     </div>
 </div>
-
 <div class="bg-layer final-bg-layer">
     <div class="content">
         <img src="{% static 'images/rocket.svg' %}" id="rocket-image" alt="">

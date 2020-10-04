@@ -22,64 +22,68 @@ def auth_user(request):
         using django authenticate mechanism
     """
     if request.method == 'POST':
-        if 'password22' in request.POST:
-            username = request.POST.get('username22')
-            password = request.POST.get('password22')
+        req = request.POST
+        if 'password_login' in request.POST:
+            username = req.get('username_login')
+            password = req.get('password_login')
             user = auth.authenticate(username=username, password=password)
-            if user is not None:
+            if user:
                 auth.login(request, user)
                 return redirect('payment')
             else:
                 messages.info(request, 'Неверный логин или пароль')
                 return redirect('auth_user')
         else:
-            if User.objects.filter(username=request.POST.get('username')).exists():
-                    messages.info(request, 'Логин уже занят')
-            elif User.objects.filter(email=request.POST.get('email')).exists():
-                messages.info(request, 'Электронная почта уже занята')
-            elif not request.POST.get('email') or request.POST.get('email') == " ":
-                messages.info(request, 'Заполните поле электронной почта')
-            elif not request.POST.get('username') or request.POST.get('username') == " ":
+            email = req.get('email', None)
+            username = req.get('username', None)
+            telephone_number = req.get('telephone_number', None)
+            password = req.get('password', None)
+            first_name = req.get('first_name', None)
+            last_name = req.get('last_name', None)
+            class_number = req.get('class_number', None)
+            name_school = req.get('name_school', None)
+            if not email or len(email) < 5:
+                messages.info(request, 'Заполните поле электронная почта')
+            elif not username or len(username) < 3:
                 messages.info(request, 'Заполните поле логин')
-            elif not request.POST.get('telephone_number'):
+            elif not telephone_number:
                 messages.info(request, 'Заполните поле телефонный номер')
-            elif not request.POST.get('password') or request.POST.get('password') == " ":
+            elif not password:
                 messages.info(request, 'Заполните поле пароль')
-            elif not request.POST.get('first_name') or request.POST.get('first_name') == " ":
+            elif not first_name:
                 messages.info(request, 'Заполните поле имя')
-            elif not request.POST.get('last_name') or request.POST.get('last_name') == " ":
+            elif not last_name:
                 messages.info(request, 'Заполните поле фамилия')
-            elif not request.POST.get('class_number') or request.POST.get('class_number') == " ":
+            elif not class_number or int(class_number) not in range(1, 12):
                 messages.info(request, 'Заполните поле номер класса. Вводить нужно только сам номер(цифрой)')
-            elif not request.POST.get('name_school') or request.POST.get('name_school') == " ":
+            elif not name_school:
                 messages.info(request, 'Заполните поле название школы')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request, 'Логин уже занят')
+            elif User.objects.filter(email=email).exists():
+                messages.info(request, 'Электронная почта уже занята')
             else:
-                new_user = User.objects.create_user(username=request.POST.get('username'),
-                                               email=request.POST.get('email'), first_name=request.POST.get('first_name'),
-                                               last_name=request.POST.get('last_name'), password=request.POST.get('password'))
-                user = User.objects.get(username=request.POST.get('username'))
-                telephone_number = request.POST.get('telephone_number')
-                class_number = request.POST.get('class_number')
-                name_school = request.POST.get('name_school')
+                new_user = User.objects.create_user(username=username, email=email,
+                                                    first_name=first_name, last_name=last_name,
+                                                    password=password)
+                user = User.objects.get(username=username)
                 class_number_get = ClassNumber.objects.get(name=class_number)
                 student = Student.objects.create(user=new_user, telephone_number=telephone_number,
-                                                    class_number=class_number_get, name_school=name_school)
+                                                 class_number=class_number_get, name_school=name_school)
                 registration_text = "Поздравляем Вас с регистрацией на олимпиаду! \nНиже представлены логин и пароль от Вашего аккаунта. Просим, не сообщать никому данные. \nВаш логин: {0} \nВаш пароль: {1} \nЛюбые возникшие вопросы Вы можете задать в чате технической поддержки на сайте.\nУспешного написания олимпиады!\nС уважением, Школа Точных Наук 'Штерн'!".format(request.POST.get('username'), request.POST.get('password'))
-                send_mail(
-                    'Регистрация на онлайн олимпиаду',
-                    registration_text,
-                    settings.EMAIL_HOST_USER,
-                    [request.POST.get('email'), ],
-                    fail_silently=False
-                    )
+                if settings.START_SETTING == "PRODUCTION":
+                    send_mail(
+                        'Регистрация на онлайн олимпиаду',
+                        registration_text,
+                        settings.EMAIL_HOST_USER,
+                        [email, ],
+                        fail_silently=False
+                        )
                 
                 event_for_user = Event.objects.get(classes__name=class_number_get)
-                new_user_in_event = UserInEvent.objects.create(
-                                        user=student,
-                                        event=event_for_user,
-                                        paid=False, date_registration=datetime.datetime.now())
-                if user is not None:
-                    auth.login(request, user)
+                UserInEvent.objects.create(user=student, event=event_for_user,
+                                           paid=False, date_registration=datetime.datetime.now())
+                auth.login(request, user)
                 return redirect('payment')
     return render(request, 'index.html', locals())
 
@@ -124,7 +128,7 @@ def payment(request):
             return redirect(url.format(settings.MERCHANT_ID, params_string))
     else:
         return redirect(reverse('time_to_start', kwargs={'category_slug': student.event.category.slug, 'slug': student.event.slug}))
-    return render(request, 'payment.html', locals())
+    return render(request, 'payment/payment.html', locals())
 
    
 def plus_balls(id, qs, user, txt):
@@ -313,7 +317,7 @@ def bad_payment(request):
 
 
 def documents(request):
-    return render(request, 'documents.html')
+    return render(request, 'info/documents.html')
 
 @login_required(login_url='/user/auth/')
 def profile(request):

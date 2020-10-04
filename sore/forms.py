@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import *
+from .models import Student, UserAnswer, ClassNumber
 from django import forms
 from django.contrib.auth.models import User
 
