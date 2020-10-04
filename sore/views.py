@@ -154,14 +154,13 @@ def start_olympiad(request, category_slug, slug):
         return redirect('payment')
     else:
         data = Event.objects.get(slug=slug)
-        id_question = Question.objects.filter(event__slug=slug).first()
         if 'start-modal-start' in request.POST:
-            return redirect(reverse('question', kwargs={'category_slug': category_slug, 'slug': slug, 'id_question': id_question}))
+            return redirect(reverse('question', kwargs={'category_slug': category_slug, 'slug': slug}))
     return render(request, 'start-olymp.html', locals())
 
 
 @login_required(login_url='/user/auth/')
-def question(request, category_slug, slug, id_question):
+def question(request, category_slug, slug):
     student = getting_student(request.user)
     answered_questions = UserAnswer.objects.filter(student=request.user.student)
     questions = Question.objects.filter(event__slug=slug)[0:4]
@@ -177,10 +176,11 @@ def question(request, category_slug, slug, id_question):
     if request.method == "POST":
         if request.POST.get('answer'):
             answer = request.POST.get('answer')
-            question = Question.objects.get(pk=id_question)
+            question = Question.objects.get(pk=request.POST.get('id'))
             create_new_user_answer(event, question, answer, student)
         else:
             nothing_answer = 'Вы ничего не ответили'
+        return redirect(reverse('question', kwargs={'category_slug': category_slug, 'slug': slug}))
     return render(request, 'olymp.html', locals())
 
 

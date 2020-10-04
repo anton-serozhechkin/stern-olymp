@@ -56,16 +56,20 @@
                     <img src="{{ question.image.url }}"/>
                     {% endif %}
                     <div class="answer">
-                        <form action="{% url 'question' category_slug=category_slug slug=slug id_question=question.id %}" method="POST">
+                        <form action="{% url 'question' category_slug=category_slug slug=slug %}" method="POST">
                             {% csrf_token %}
                             <p>Ответ:</p>
                             <input name="answer" type="text">
+                            <input name="id" type="hidden" value="{{ question.id }}">
                             <button type="submit">Ответить</button>
                         </form>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+            {% if nothing_answer %}
+             {{ nothing_answer }}
+            {% endif %}
             <div class="navigation">
                 <button class="olymp-slider-prev">
                     <img src="{% static 'images/arrow.svg' %}" alt="">
