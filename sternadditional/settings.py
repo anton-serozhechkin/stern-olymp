@@ -22,15 +22,16 @@ else:
     ALLOWED_HOSTS = []
 
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    'USER': os.environ.get("USER"),
-    'PASSWORD': os.environ.get("PASSWORD"),
-    'HOST': 'localhost',
-    'PORT': '',
-    }
-}
+            'default':
+                {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                    'USER': os.environ.get("USER"),
+                    'PASSWORD': os.environ.get("PASSWORD"),
+                    'HOST': 'localhost',
+                    'PORT': '',
+                }
+            }
 
 
 # Application definition
@@ -90,7 +91,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -111,18 +112,21 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
 
-#Payment olympiad
+# Payment olympiad
 SECRET_KEY_PAYMENT = os.environ.get('SECRET_KEY_PAYMENT')
 PRICE = str(10)
 DESC = 'Оплата за олимпиаду'
 MERCHANT_ID = os.environ.get('MERCHANT_ID')
 
-#Email settings
+# Email settings
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST =  'smtp.beget.com'
+EMAIL_HOST = 'smtp.beget.com'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+# Text for greetings
+REGISTRATION_TEXT = "Поздравляем Вас с регистрацией на олимпиаду! \nНиже представлены логин и пароль от Вашего аккаунта. Просим, не сообщать никому данные. \nВаш логин: {} \nВаш пароль: {} \nЛюбые возникшие вопросы Вы можете задать в чате технической поддержки на сайте.\nУспешного написания олимпиады!\nС уважением, Школа Точных Наук 'Штерн'!"

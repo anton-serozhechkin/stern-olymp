@@ -3,6 +3,7 @@ from .models import Student, UserAnswer, ClassNumber
 from django import forms
 from django.contrib.auth.models import User
 
+
 class SignUpStudentForm(forms.ModelForm):
     telephone_number = forms.CharField(max_length=11, help_text='Телефонный номер')
     class_number = forms.ModelChoiceField(queryset=ClassNumber.objects.all(), help_text='Год обучения')
@@ -13,7 +14,7 @@ class SignUpStudentForm(forms.ModelForm):
         fields = ['telephone_number', 'class_number',
                   'name_school']
 
-                
+
 class UserAnswerForm(forms.ModelForm):
     class Meta:
         model = UserAnswer

@@ -14,11 +14,12 @@ from urllib.parse import urlencode, parse_qsl
 import json
 import datetime
 from django.contrib.auth import logout
-from .optional_methods import getting_student, getting_user_in_event
+from .optional_methods import getting_student, getting_user_in_event, strftime, time_olymp, create_new_user_answer
+
 
 def auth_user(request):
     """
-        signin view
+        signin/signup view
         using django authenticate mechanism
     """
     if request.method == 'POST':
@@ -70,16 +71,15 @@ def auth_user(request):
                 class_number_get = ClassNumber.objects.get(name=class_number)
                 student = Student.objects.create(user=new_user, telephone_number=telephone_number,
                                                  class_number=class_number_get, name_school=name_school)
-                registration_text = "Поздравляем Вас с регистрацией на олимпиаду! \nНиже представлены логин и пароль от Вашего аккаунта. Просим, не сообщать никому данные. \nВаш логин: {0} \nВаш пароль: {1} \nЛюбые возникшие вопросы Вы можете задать в чате технической поддержки на сайте.\nУспешного написания олимпиады!\nС уважением, Школа Точных Наук 'Штерн'!".format(request.POST.get('username'), request.POST.get('password'))
+                registration_text = settings.REGISTRATION_TEXT
+                hello_text = registration_text.format(request.POST.get('username'), request.POST.get('password'))
                 if settings.START_SETTING == "PRODUCTION":
                     send_mail(
                         'Регистрация на онлайн олимпиаду',
-                        registration_text,
+                        hello_text,
                         settings.EMAIL_HOST_USER,
                         [email, ],
-                        fail_silently=False
-                        )
-                
+                        fail_silently=False)
                 event_for_user = Event.objects.get(classes__name=class_number_get)
                 UserInEvent.objects.create(user=student, event=event_for_user,
                                            paid=False, date_registration=datetime.datetime.now())
@@ -87,8 +87,10 @@ def auth_user(request):
                 return redirect('payment')
     return render(request, 'index.html', locals())
 
+
 def redirect_index(request):
     return redirect('auth_user')
+
 
 @login_required(login_url='/user/auth/')
 def payment(request):
@@ -106,11 +108,11 @@ def payment(request):
         sign_string - collecting the necessary information for signature
 
         sign - ready-made encrypted signature
-    
+
     :return sign to unitpay server
     """
     student = UserInEvent.objects.get(user__user=request.user)
-    if student.paid == False:
+    if student.paid is False:
         if request.method == 'POST':
             account = request.user.username
             separator = '{up}'
@@ -130,19 +132,6 @@ def payment(request):
         return redirect(reverse('time_to_start', kwargs={'category_slug': student.event.category.slug, 'slug': student.event.slug}))
     return render(request, 'payment/payment.html', locals())
 
-   
-def plus_balls(id, qs, user, txt):
-    if Answer.objects.filter(text=txt, question=qs).exists():
-        plus = getting_student(user)
-        if str(id) in settings.DICT_BALLS:
-            plus.count += settings.DICT_BALLS(id)
-        else:
-            plus.count += 1
-        plus.save()
-    return redirect('tests')
-
-def strftime(date):
-    return date.strftime("%Y-%m-%d %H:%M:%S")
 
 @login_required(login_url='/user/auth/')
 def time_to_start(request, category_slug, slug):
@@ -152,14 +141,16 @@ def time_to_start(request, category_slug, slug):
     else:
         return redirect(reverse('start_olympiad', kwargs={'category_slug': category_slug, 'slug': slug}))
 
+
 @login_required(login_url='/user/auth/')
 def final(request, category_slug, slug):
     return render(request, 'final.html')
 
+
 @login_required(login_url='/user/auth/')
 def start_olympiad(request, category_slug, slug):
     student_in_event = getting_user_in_event(request.user)
-    if student_in_event.paid == False:
+    if student_in_event.paid is False:
         return redirect('payment')
     else:
         data = Event.objects.get(slug=slug)
@@ -168,78 +159,47 @@ def start_olympiad(request, category_slug, slug):
             return redirect(reverse('question', kwargs={'category_slug': category_slug, 'slug': slug, 'id_question': id_question}))
     return render(request, 'start-olymp.html', locals())
 
-def create_new_user_answer(event, question, answer, student):
-    exist_answer = Answer.objects.filter(event=event, 
-                             question=question, text=answer.lower()).exists()
-    if exist_answer:
-        UserAnswer.objects.create(question=question,
-                                    student=student, 
-                                    answer=answer,
-                                    correct=True)
-        student.count += question.count_balls
-        student.save()
-    else:
-        UserAnswer.objects.create(question=question,
-                                    student=student, 
-                                    answer=answer,
-                                    correct=False)
-
-def time_olymp(user, event):
-    student = getting_student(user)
-    if student.class_number.name in range(1, 3):
-        end_time = datetime.datetime.now() + datetime.timedelta(hours=1)
-    elif student.class_number.name in range(3, 9):
-        end_time = datetime.datetime.now() + datetime.timedelta(hours=1, minutes=30)
-    else:
-        end_time = datetime.datetime.now() + datetime.timedelta(hours=2)
-    if not StartOlymp.objects.filter(user__username=user.username).exists():
-        StartOlymp.objects.create(user=user, event=event,
-                    start_time=datetime.datetime.now(), end_time=end_time)
-    return end_time
 
 @login_required(login_url='/user/auth/')
 def question(request, category_slug, slug, id_question):
     student = getting_student(request.user)
     answered_questions = UserAnswer.objects.filter(student=request.user.student)
     questions = Question.objects.filter(event__slug=slug)[0:4]
+    event = Event.objects.get(slug=slug)
     if questions.count() == answered_questions.count():
        return redirect(reverse('final', kwargs={'category_slug': category_slug, 'slug': slug}))
-    list_name_answered_questions = []
+    list_answered_questions = []
     if answered_questions:
         for answered_question in answered_questions:
-            list_name_answered_questions.append(answered_question.question.question)
-        questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_name_answered_questions)[0:4]
-    event = Event.objects.get(slug=slug)
+            list_answered_questions.append(answered_question.question.question)
+        questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_answered_questions)[0:4]
     end_olymp_user = json.dumps(strftime(time_olymp(user=request.user, event=event)))
     if request.method == "POST":
         if request.POST.get('answer'):
             answer = request.POST.get('answer')
             question = Question.objects.get(pk=id_question)
-            new_user_answer = create_new_user_answer(event, question, answer, student)
+            create_new_user_answer(event, question, answer, student)
         else:
             nothing_answer = 'Вы ничего не ответили'
     return render(request, 'olymp.html', locals())
 
+
 def index(request):
     return render(request, 'index.html')
 
+
 @login_required(login_url='/user/auth/')
 def answer(request, id):
-    if request.user.student.paid == True:
+    if request.user.student.paid is True:
         question = Question.objects.get(id=id)
         answered_question = UserAnswer.objects.filter(question=question, student=request.user.student).exists()
-
         if not answered_question:
-                            
-            if request.method == 'POST': 
-        
+            if request.method == 'POST':
                 form = UserAnswerForm(request.POST)
                 if form.is_valid():
-                
                     q1 = form.cleaned_data['answer']
                     txt = ''.join(q1)
                     create_answer(request.user.student, txt, question)
-                    plus_balls(question.id, question, request.user.student.user, txt)
                     return redirect('tests')
                 else:
                     return redirect('tests')
@@ -247,9 +207,7 @@ def answer(request, id):
                 form = UserAnswerForm()
         else:
             completed = 'Вы уже ответили на этот вопрос'
-        
         return render(request, 'core/answer.html', locals())
-
     else:
         return redirect('payment')
 
@@ -257,6 +215,7 @@ def answer(request, id):
 def signout(request):
     logout(request)
     return redirect('auth_user')
+
 
 def payment_check(request):
     """
@@ -270,7 +229,6 @@ def payment_check(request):
         method - status of payment
 
         payment - user from db
-    
     :return json with message to user
     check this links:
     :https://github.com/unitpay/python-sdk
@@ -279,17 +237,15 @@ def payment_check(request):
     """
     data = request.GET.copy()
     method = data.get('method')
-		
     if method == 'check':
         try:
             student = getting_student(data.get('params[account]'))
-            if student.paid == True:
+            if student.paid:
                 return json.dumps({'message': 'Вы уже оплатили олимпиаду'})
             else:
                 return json.dumps({'message': 'Ожидание успешно'})
         except Student.DoesNotExist:
                 return json.dumps({'message': 'Неверный обьект обработки. Пользователь не найден'})
-    
     elif method == 'pay':
         try:
             student = getting_student(data.get('params[account]'))
@@ -298,12 +254,11 @@ def payment_check(request):
             return json.dumps({'message': 'Оплата успешна'})
         except Student.DoesNotExist:
             return json.dumps({'message': 'Неверный обьект обработки. Пользователь не найден'})
-            
     elif method == 'error':
         return json.dumps({'message': 'Произошла какая-то ошибка'})
-    
     else:
         return json.dumps({'message': 'Метод не поддерживается'})
+
 
 @login_required(login_url='/user/auth/')
 def bad_payment(request):
@@ -318,6 +273,7 @@ def bad_payment(request):
 
 def documents(request):
     return render(request, 'info/documents.html')
+
 
 @login_required(login_url='/user/auth/')
 def profile(request):
@@ -346,6 +302,7 @@ def profile(request):
             student.name_school = request.POST.get('name_school')
             student.save()
     return render(request, 'profile.html', locals())
+
 
 @login_required(login_url='/user/auth/')
 def succes_payment(request):
