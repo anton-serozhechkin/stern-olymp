@@ -12,7 +12,7 @@
         </div>
         <ul class="desktop-nav-list">
             <li class="desktop-nav-item">
-                <a href="/">
+                <a href="{% url 'auth_user' %}">
                     <img src="{% static 'images/logo-icon.svg' %}" alt="">
                     Главная
                 </a>
@@ -24,13 +24,13 @@
                 </a>
             </li>
             <li class="desktop-nav-item">
-                <a href="/profile">
+                <a href="{% url 'profile' %}">
                     <img src="{% static 'images/profile-icon.svg' %}" alt="">
                     Профиль
                 </a>
             </li>
             <li class="desktop-nav-item">
-                <a href="/documents">
+                <a href="{% url 'documents' %}">
                     <img src="{% static 'images/document-icon.svg' %}" alt="">
                     Документы
                 </a>
@@ -38,26 +38,24 @@
         </ul>
         <div class="desktop-nav-social">
             <div class="site-link">
-                <a href="https://www.schoolofsciences.ru">
+                <a href="//www.schoolofsciences.ru">
                     www.schoolofsciences.ru
                 </a>
             </div>
             <ul class="desktop-nav-social_list">
                 <li>
-                    <a href="https://vk.com/schoolofsciences/">
+                    <a href="//vk.com/schoolofsciences/">
                         <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
                     </a>
                 </li>
                 <li>
-                    <a href="https://instagram.com/schoolofsciences/">
+                    <a href="//instagram.com/schoolofsciences/">
                         <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-
-
     <div class="dialog-layer timer-dialog-layer">
         <div class="content">
             <div class="box">
@@ -133,28 +131,7 @@
         </div>
     </div>
     <div class="template-wrap timer-wrap">
-        <div class="content-layer">
-            <div class="site-visit">
-                <div class="social-links">
-                <ul class="social-list">
-                    <li class="social-item">
-                        <a class="social-link" href="https://vk.com/schoolofsciences/">
-                            <img class="social-image vk" src="{% static 'images/social-icon-vk.svg' %}" alt="">
-                        </a>
-                    </li>
-                    <li class="social-item">
-                        <a class="social-link" href="https://instagram.com/schoolofsciences/">
-                            <img class="social-image instagram" src="{% static 'images/social-icon-instagram.svg' %}" alt="">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-                <p>Посетите наш сайт :)</p>
-                <p><a class="site-visit-link" href="https://schoolofsciences.ru/">www.schoolofsciences.ru</a></p>
-
-        </div>
-
-        </div>
+        {% include "links.html" %}
     </div>
 
     <footer class="footer " id="footer">

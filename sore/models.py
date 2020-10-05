@@ -89,7 +89,7 @@ class Question(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Олимпиада')
     question = models.CharField('Вопрос', max_length=1000)
     image = models.ImageField('Фото', upload_to='pictures/', blank=True, null=True)
-    count_answers = models.IntegerField('Количество ответов', default=0)
+    count_answers = models.IntegerField('Количество ответов', default=1)
     count_balls = models.IntegerField('Количество баллов за правильный ответ', default=1)
 
     def __str__(self):

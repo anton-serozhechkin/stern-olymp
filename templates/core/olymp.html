@@ -78,6 +78,13 @@
                 <button class="olymp-slider-prev">
                     <img src="{% static 'images/arrow.svg' %}" alt="">
                 </button>
+                <ul class="olymp-slider-menu">
+                    {% for question in questions %}
+                        <li class="olymp-slider-item">
+                            {{ question.id }}
+                        </li>
+                    {% endfor %}
+                </ul>
                 <button class="olymp-slider-next">
                     <img src="{% static 'images/arrow.svg' %}" alt="">
                 </button>
@@ -88,7 +95,6 @@
         </div>
     </div>
 </div>
-
 <div class="bg-layer">
     <div class="content">
         <img class="bg-timer-layer-item" id="bg-timer-layer-item-1" src="{% static 'images/bg-layer-1.svg' %}" alt="">
@@ -114,7 +120,7 @@
                 </li>
                 <li class="header-item">
                     <a class="header-link" href="">
-                        Юзернейм
+                        {{ request.user.username }}
                     </a>
                 </li>
             </ul>

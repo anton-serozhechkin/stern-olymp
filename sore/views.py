@@ -85,7 +85,7 @@ def auth_user(request):
                                            paid=False, date_registration=datetime.datetime.now())
                 auth.login(request, user)
                 return redirect('payment')
-    return render(request, 'index.html', locals())
+    return render(request, 'core/index.html', locals())
 
 
 def redirect_index(request):
@@ -137,14 +137,14 @@ def payment(request):
 def time_to_start(request, category_slug, slug):
     time_start = Event.objects.get(slug=slug).data_event
     if datetime.datetime.now().timestamp() < time_start.timestamp():
-        return render(request, 'timer.html', {'time_to_start': json.dumps(strftime(time_start))})
+        return render(request, 'core/timer.html', {'time_to_start': json.dumps(strftime(time_start))})
     else:
         return redirect(reverse('start_olympiad', kwargs={'category_slug': category_slug, 'slug': slug}))
 
 
 @login_required(login_url='/user/auth/')
 def final(request, category_slug, slug):
-    return render(request, 'final.html')
+    return render(request, 'core/final.html')
 
 
 @login_required(login_url='/user/auth/')
@@ -156,7 +156,7 @@ def start_olympiad(request, category_slug, slug):
         data = Event.objects.get(slug=slug)
         if 'start-modal-start' in request.POST:
             return redirect(reverse('question', kwargs={'category_slug': category_slug, 'slug': slug}))
-    return render(request, 'start-olymp.html', locals())
+    return render(request, 'core/start-olymp.html', locals())
 
 
 @login_required(login_url='/user/auth/')
@@ -184,7 +184,7 @@ def question(request, category_slug, slug):
         else:
             nothing_answer = 'Вы ничего не ответили'
         return redirect(reverse('question', kwargs={'category_slug': category_slug, 'slug': slug}))
-    return render(request, 'olymp.html', locals())
+    return render(request, 'core/olymp.html', locals())
 
 
 def signout(request):
@@ -278,7 +278,7 @@ def profile(request):
     else:
         user_form = UserForm(instance=user)
         student_form = SignUpStudentForm(instance=student)
-    return render(request, 'profile.html', locals())
+    return render(request, 'profile/profile.html', locals())
 
 
 @login_required(login_url='/user/auth/')

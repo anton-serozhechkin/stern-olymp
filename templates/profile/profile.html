@@ -3,8 +3,6 @@
 {% load static %}
 {% block title %}Олимпиада Штерн - Личный кабинет{% endblock %}
 {% block content %}
-
-
 <img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
 <div class="desktop-nav">
     <div class="nav-logo">
@@ -13,38 +11,36 @@
             <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>
-  
     <ul class="desktop-nav-list">
-
         <li class="desktop-nav-item">
-            <a href="/">
+            <a href="{% url 'auth_user' %}">
                 <img src="{% static 'images/logo-icon.svg' %}" alt="">
                 Главная
             </a>
         </li>
         {% if user_in_event.paid %}
         <li class="desktop-nav-item ">
-            <a href="/payment">
+            <a href="{% url 'payment' %}">
                 <img src="{% static 'images/olymp-icon.svg' %}" alt="">
                 Олимпиада
             </a>
         </li>
         {% else %}
         <li class="desktop-nav-item ">
-            <a href="/payment">
+            <a href="{% url 'payment' %}">
                 <img src="{% static 'images/olymp-icon.svg' %}" alt="">
                 Оплатить
             </a>
         </li>
         {% endif %}
         <li class="desktop-nav-item desktop-nav-item_active">
-            <a href="/profile">
+            <a href="{% url 'profile' %}">
                 <img src="{% static 'images/profile-icon.svg' %}" alt="">
                 Профиль
             </a>
         </li>
         <li class="desktop-nav-item">
-            <a href="/documents">
+            <a href="{% url 'documents' %}">
                 <img src="{% static 'images/document-icon.svg' %}" alt="">
                 Документы
             </a>
@@ -52,25 +48,24 @@
     </ul>
     <div class="desktop-nav-social">
         <div class="site-link">
-            <a href="https://www.schoolofsciences.ru">
+            <a href="//www.schoolofsciences.ru">
                 www.schoolofsciences.ru
             </a>
         </div>
         <ul class="desktop-nav-social_list">
             <li>
-                <a href="https://vk.com/schoolofsciences/">
+                <a href="//vk.com/schoolofsciences/">
                     <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
                 </a>
             </li>
             <li>
-                <a href="https://instagram.com/schoolofsciences/">
+                <a href="//instagram.com/schoolofsciences/">
                     <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
                 </a>
             </li>
         </ul>
     </div>
 </div>
-
 <div class="dialog-layer personal-dialog-layer">
     <div class="content">
         <div class="profile-wrapper">
@@ -154,60 +149,36 @@
     </div>
 </div>
 <div class="template-wrap personal-area-layer">
-    <div class="content-layer">
-        
-        <div class="site-visit">
-            <div class="social-links">
-            <ul class="social-list">
-                <li class="social-item">
-                    <a class="social-link" href="https://vk.com/schoolofsciences/">
-                        <img class="social-image vk" src="{% static 'images/social-icon-vk.svg' %}" alt="">
-                    </a>
-                </li>
-                <li class="social-item">
-                    <a class="social-link" href="https://instagram.com/schoolofsciences/">
-                        <img class="social-image instagram" src="{% static 'images/social-icon-instagram.svg' %}" alt="">
-                    </a>
-                </li>
-            </ul>
-        </div> 
-            <p>Посетите наш сайт :)</p>
-            <p><a class="site-visit-link" href="https://schoolofsciences.ru/">www.schoolofsciences.ru</a></p>
-        </div>
-       
-    </div>
+    {% include "links.html" %}
 </div>
-
 <footer class="footer " id="footer">
     {% include "footer-div.html" %}
 </footer>
-
-
 <div class="mobile-nav">
     <ul class="mobile-nav-list">
     <div class="mobile-nav-top">
         <img src="{% static 'images/mobile-nav-figure.png' %}">
     </div>
         <li class="mobile-nav-item">
-            <a href="/">
+            <a href="{% url 'auth_user' %}">
                 <img src="{% static 'images/mobile-nav-ico-mainPage-inactive.svg' %}" alt="" class="mobile-nav-image">
             </a>
         </li>
         {% if user_in_event.paid %}
         <li class="mobile-nav-item">
-            <a href="/payment">
+            <a href="{% url 'payment' %}">
                 <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="к олимпиаде" class="mobile-nav-image" style="position:relative;top:0.6px;">
             </a>
         </li>
         {% else %}
         <li class="mobile-nav-item">
-            <a href="/payment">
+            <a href="{% url 'payment' %}">
                 <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="оплатить" class="mobile-nav-image" style="position:relative;top:0.6px;">
             </a>
         </li>
         {% endif %}
         <li class="mobile-nav-item">
-            <a href="/profile">
+            <a href="{% url 'profile' %}">
                 <img src="{% static 'images/mobile-nav-ico-profile-active.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
             </a>
         </li>

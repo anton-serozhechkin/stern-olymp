@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Олимпиада Штерн - Личный кабинет
+    Олимпиада Штерн - Стар Олимпиады
 {% endblock %}
 {% block content %}
 <img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
@@ -13,61 +13,45 @@
         </a>
     </div>
     <ul class="desktop-nav-list">
-    {% if not request.user.is_authenticated %}
-        <li class="desktop-nav-item desktop-nav-item_active" style="cursor: pointer;">
-            <a class="sign-selector">
-                <img src="{% static 'images/sign-icon.svg' %}" style="width:29px;" alt="">
-                <span>Вход/Регистрация</span>
-            </a>
-        </li>
-        <li class="desktop-nav-item">
-            <a href="/documents">
-                <img src="{% static 'images/document-icon.svg' %}" alt="">
-                Документы
-            </a>
-        </li>
-        {% endif %}
-         {% if request.user.is_authenticated %}
         <li class="desktop-nav-item ">
-            <a href="/">
+            <a href="{% url 'auth_user' %}">
                 <img src="{% static 'images/logo-icon.svg' %}" alt="">
                 Главная
             </a>
         </li>
         <li class="desktop-nav-item desktop-nav-item_active">
-            <a href="/payment">
+            <a href="">
                 <img src="{% static 'images/olymp-icon.svg' %}" alt="">
                 Олимпиада
             </a>
         </li>
         <li class="desktop-nav-item">
-            <a href="/profile">
+            <a href="{% url 'profile' %}">
                 <img src="{% static 'images/profile-icon.svg' %}" alt="">
                 Профиль
             </a>
         </li>
         <li class="desktop-nav-item">
-            <a href="/documents">
+            <a href="{% url 'documents' %}">
                 <img src="{% static 'images/document-icon.svg' %}" alt="">
                 Документы
             </a>
         </li>
-        {% endif %}
     </ul>
     <div class="desktop-nav-social">
         <div class="site-link">
-            <a href="https://www.schoolofsciences.ru">
+            <a href="//www.schoolofsciences.ru">
                 www.schoolofsciences.ru
             </a>
         </div>
         <ul class="desktop-nav-social_list">
             <li>
-                <a href="https://vk.com/schoolofsciences/">
+                <a href="//vk.com/schoolofsciences/">
                     <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
                 </a>
             </li>
             <li>
-                <a href="https://instagram.com/schoolofsciences/">
+                <a href="//instagram.com/schoolofsciences/">
                     <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
                 </a>
             </li>
@@ -97,7 +81,6 @@
         </div>
     </div>
 </div>
-
 <div class="bg-layer">
     <div class="content">
         <img class="bg-timer-layer-item" id="bg-timer-layer-item-1" src="{% static 'images/bg-layer-1.svg' %}" alt="">
@@ -109,30 +92,8 @@
     </div>
 </div>
 <div class="template-wrap index-layer start-layer">
-    <div class="content-layer">
-      
-        <div class="site-visit">
-            <div class="social-links">
-            <ul class="social-list">
-                <li class="social-item">
-                    <a class="social-link" href="https://vk.com/schoolofsciences/">
-                        <img class="social-image vk" src="{% static 'images/social-icon-vk.svg' %}" alt="">
-                    </a>
-                </li>
-                <li class="social-item">
-                    <a class="social-link" href="https://instagram.com/schoolofsciences/">
-                        <img class="social-image instagram" src="{% static 'images/social-icon-instagram.svg' %}" alt="">
-                    </a>
-                </li>
-            </ul>
-        </div> 
-            <p>Посетите наш сайт :)</p>
-            <p><a class="site-visit-link" href="https://schoolofsciences.ru/">www.schoolofsciences.ru</a></p>
-        </div>
-       
-    </div>
+    {% include "links.html" %}
 </div>
-
 <footer class="footer" id="footer">
     <div class="footer-images">
         <img class="stripes" src="{% static 'images/bg-layer-7.svg' %}" alt="">
