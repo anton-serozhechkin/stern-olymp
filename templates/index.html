@@ -122,22 +122,7 @@
     <div class="footer-images">
         <img class="stripes" id="index-footer-image"  style="opacity: 0;" src="{% static 'images/bg-layer-7.svg' %}" alt="">
     </div>
-
-    <div class="content">
-        <p>
-            <a href="/documents">
-                Политика конфиденциальности
-            </a>
-        </p>
-        <p>
-            <a href="/documents">
-                Соглашение
-            </a>
-        </p>
-    </div>
-    <div class="copyright">
-        <p>COPYRIGHT &#169;2020 <span>Школа точных наук "ШТЕРН"</span></p>
-    </div>
+    {% include "footer-div.html" %}
 </footer>
 <div class="sign-modal-bg" id="signModalBg">
     <div class="content">
@@ -242,31 +227,7 @@
     </div>
 </div>
 {% if request.user.is_authenticated %}
-<div class="mobile-nav">
-    <ul class="mobile-nav-list">
-    <div class="mobile-nav-top">
-        <img src="{% static 'images/mobile-nav-figure.png' %}">
-    </div>
-        <li class="mobile-nav-item">
-            <a href="/">
-                <img src="{% static 'images/mobile-nav-ico-mainPage-active.svg' %}" alt="" class="mobile-nav-image">
-            </a>
-        </li>
-        <li class="mobile-nav-item">
-            <a href="/payment">
-                <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:0.6px;">
-            </a>
-        </li>
-        <li class="mobile-nav-item">
-            <a href="/profile">
-                <img src="{% static 'images/mobile-nav-ico-profile-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
-            </a>
-        </li>
-        <li class="mobile-nav-item" id="chatBtn">
-             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
-        </li>
-    </ul>
-</div>
+{% include "mobile-nav.html" %}
 {% endif %}
 <div id="preloader-bg" style="width: 100vw; height: 100vh; background: #f6e55c;z-index: 500;position: absolute;top: 0;">
 </div>	

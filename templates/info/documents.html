@@ -148,47 +148,7 @@
         <img class="penguin penguin-doc" src="{% static 'images/doc-penguin.svg' %}" alt="">
         <img class="stripes" src="{% static 'images/bg-layer-7.svg' %}" alt="">
     </div>
-    <div class="content">
-        <p>
-            <a href="#">
-                Политика конфиденциальности
-            </a>
-        </p>
-        <p>
-            <a href="#">
-                Соглашение
-            </a>
-        </p>
-    </div>
-    <div class="copyright">
-        <p>COPYRIGHT &#169;2020 <span>Школа точных наук "ШТЕРН"</span></p>
-    </div>
+    {% include "footer-div.html" %}
 </footer>
-
-<div class="mobile-nav">
-    <ul class="mobile-nav-list">
-    <div class="mobile-nav-top">
-        <img src="{% static 'images/mobile-nav-figure.png' %}">
-    </div>
-        <li class="mobile-nav-item">
-            <a href="/">
-                <img src="{% static 'images/mobile-nav-ico-mainPage-inactive.svg' %}" alt="" class="mobile-nav-image">
-            </a>
-        </li>
-        <li class="mobile-nav-item">
-            <a href="/payment">
-                <img src="{% static 'images/mobile-nav-ico-toOlymp-active.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:0.6px;">
-            </a>
-        </li>
-        <li class="mobile-nav-item">
-            <a href="/profile">
-                <img src="{% static 'images/mobile-nav-ico-profile-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
-            </a>
-        </li>
-        <li class="mobile-nav-item" id="chatBtn">
-             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
-        </li>
-    </ul>
-</div>
-
+{% include "mobile-nav.html" %}
 {% endblock content %}

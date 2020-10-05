@@ -122,21 +122,7 @@
     <div class="footer-images">
         <img class="stripes" src="{% static 'images/payment-stripes.svg' %}" alt="">
     </div>
-    <div class="content">
-        <p>
-            <a href="https://shtern-olymp.ru/documents/">
-                Политика конфиденциальности
-            </a>
-        </p>
-        <p>
-            <a href="https://shtern-olymp.ru/documents/">
-                Соглашение
-            </a>
-        </p>
-    </div>
-    <div class="copyright">
-        <p>COPYRIGHT &#169;2020 <span>Школа точных наук "ШТЕРН"</span></p>
-    </div>
+    {% include "footer-div.html" %}
 </footer>
 
 
@@ -183,33 +169,7 @@
         </div>
     </div>
 </div>
-
-
-<div class="mobile-nav">
-    <ul class="mobile-nav-list">
-    <div class="mobile-nav-top">
-        <img src="{% static 'images/mobile-nav-figure.png' %}">
-    </div>
-        <li class="mobile-nav-item">
-            <a href="/">
-                <img src="{% static 'images/mobile-nav-ico-mainPage-inactive.svg' %}" alt="" class="mobile-nav-image">
-            </a>
-        </li>
-        <li class="mobile-nav-item">
-            <a href="/payment">
-                <img src="{% static 'images/mobile-nav-ico-toOlymp-active.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:0.6px;">
-            </a>
-        </li>
-        <li class="mobile-nav-item">
-            <a href="/profile">
-                <img src="{% static 'images/mobile-nav-ico-profile-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
-            </a>
-        </li>
-        <li class="mobile-nav-item" id="chatBtn">
-             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
-        </li>
-    </ul>
-</div>
+{% include "mobile-nav.html" %}
 <script>
     if(screen.width < 566) {
        $('.left').append($('.right').html())
