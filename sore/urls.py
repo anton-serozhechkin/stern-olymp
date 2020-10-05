@@ -8,7 +8,6 @@ urlpatterns = [
     path('bad-payment/', bad_payment, name='bad_payment'),
     path('succes-payment/', succes_payment, name='succes_payment'),
     path('payment-check/', payment_check),
-    path('index/', index, name='index'),
     re_path('final/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/$', final, name='final'),
     re_path('time-to-start/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/$', time_to_start, name='time_to_start'),
     re_path('tests/(?P<category_slug>[\w-]+)/(?P<slug>[\w-]+)/$', question, name='question'),

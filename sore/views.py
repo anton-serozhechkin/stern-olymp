@@ -173,6 +173,7 @@ def question(request, category_slug, slug):
             list_answered_questions.append(answered_question.question.question)
         questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_answered_questions)[0:4]
     end_olymp_user = json.dumps(strftime(time_olymp(user=request.user, event=event)))
+    print(end_olymp_user)
     if request.method == "POST":
         if request.POST.get('answer'):
             answer = request.POST.get('answer')
@@ -182,34 +183,6 @@ def question(request, category_slug, slug):
             nothing_answer = 'Вы ничего не ответили'
         return redirect(reverse('question', kwargs={'category_slug': category_slug, 'slug': slug}))
     return render(request, 'olymp.html', locals())
-
-
-def index(request):
-    return render(request, 'index.html')
-
-
-@login_required(login_url='/user/auth/')
-def answer(request, id):
-    if request.user.student.paid is True:
-        question = Question.objects.get(id=id)
-        answered_question = UserAnswer.objects.filter(question=question, student=request.user.student).exists()
-        if not answered_question:
-            if request.method == 'POST':
-                form = UserAnswerForm(request.POST)
-                if form.is_valid():
-                    q1 = form.cleaned_data['answer']
-                    txt = ''.join(q1)
-                    create_answer(request.user.student, txt, question)
-                    return redirect('tests')
-                else:
-                    return redirect('tests')
-            else:
-                form = UserAnswerForm()
-        else:
-            completed = 'Вы уже ответили на этот вопрос'
-        return render(request, 'core/answer.html', locals())
-    else:
-        return redirect('payment')
 
 
 def signout(request):
@@ -274,35 +247,6 @@ def bad_payment(request):
 def documents(request):
     return render(request, 'info/documents.html')
 
-"""
-@login_required(login_url='/user/auth/')
-def profile(request):
-    student = getting_student(request.user)
-    user_in_event = getting_user_in_event(request.user)
-    if request.method == "POST":
-        if request.POST.get('class_number') and student.class_number != request.POST.get('class_number'):
-            student.class_number = ClassNumber.objects.get(name=request.POST.get('class_number'))
-            student.save()
-        if request.POST.get('username') and student.user.username != request.POST.get('username'):
-            student.user.username = request.POST.get('username')
-            student.save()
-        if request.POST.get('email') and student.user.email != request.POST.get('email'):
-            student.user.email = request.POST.get('email')
-            student.save()
-        if request.POST.get('telephone_number') and student.telephone_number != request.POST.get('telephone_number'):
-            student.telephone_number = request.POST.get('telephone_number')
-            student.save()
-        if request.POST.get('first_name') and student.user.first_name != request.POST.get('first_name'):
-            student.user.first_name = request.POST.get('first_name')
-            student.save()
-        if request.POST.get('last_name') and student.user.last_name != request.POST.get('last_name'):
-            student.user.last_name = request.POST.get('last_name')
-            student.save()
-        if request.POST.get('name_school') and student.name_school != request.POST.get('name_school'):
-            student.name_school = request.POST.get('name_school')
-            student.save()
-    return render(request, 'profile.html', locals())
-"""
 
 @login_required(login_url='/user/auth/')
 def profile(request):
