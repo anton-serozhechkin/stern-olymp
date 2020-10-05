@@ -16,7 +16,7 @@ def strftime(date):
     return date.strftime("%Y-%m-%d %H:%M:%S")
 
 
-def time_olymp(user, event):
+def finish_time_olymp(user, event):
     student = getting_student(user)
     if student.class_number.name in range(1, 3):
         end_time = datetime.datetime.now() + datetime.timedelta(hours=1)
@@ -25,10 +25,12 @@ def time_olymp(user, event):
     else:
         end_time = datetime.datetime.now() + datetime.timedelta(hours=2)
     if not StartOlymp.objects.filter(user__username=user.username).exists():
-        StartOlymp.objects.create(user=user, event=event,
+        finish_time = StartOlymp.objects.create(user=user, event=event,
                                   start_time=datetime.datetime.now(),
                                   end_time=end_time)
-    return end_time
+    else:
+        finish_time = StartOlymp.objects.get(event=event, user=user)
+    return finish_time.end_time
 
 
 def create_new_user_answer(event, question, answer, student):

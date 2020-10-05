@@ -14,7 +14,7 @@ from urllib.parse import urlencode, parse_qsl
 import json
 import datetime
 from django.contrib.auth import logout
-from .optional_methods import getting_student, getting_user_in_event, strftime, time_olymp, create_new_user_answer
+from .optional_methods import getting_student, getting_user_in_event, strftime, finish_time_olymp, create_new_user_answer
 
 
 def auth_user(request):
@@ -165,6 +165,10 @@ def question(request, category_slug, slug):
     answered_questions = UserAnswer.objects.filter(student=request.user.student)
     questions = Question.objects.filter(event__slug=slug)[0:4]
     event = Event.objects.get(slug=slug)
+    finish_time = finish_time_olymp(user=request.user, event=event)
+    if finish_time.timestamp() < datetime.datetime.now().timestamp():
+        return redirect(reverse('final', kwargs={'category_slug': category_slug, 'slug': slug}))
+    end_olymp_user = json.dumps(strftime(finish_time))
     if questions.count() == answered_questions.count():
        return redirect(reverse('final', kwargs={'category_slug': category_slug, 'slug': slug}))
     list_answered_questions = []
@@ -172,8 +176,6 @@ def question(request, category_slug, slug):
         for answered_question in answered_questions:
             list_answered_questions.append(answered_question.question.question)
         questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_answered_questions)[0:4]
-    end_olymp_user = json.dumps(strftime(time_olymp(user=request.user, event=event)))
-    print(end_olymp_user)
     if request.method == "POST":
         if request.POST.get('answer'):
             answer = request.POST.get('answer')
