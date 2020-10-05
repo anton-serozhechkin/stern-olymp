@@ -18,7 +18,7 @@ class ClassNumber(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')
-    telephone_number = models.CharField('Телефонный номер', max_length=12)
+    telephone_number = models.CharField('Телефонный номер', max_length=18)
     class_number = models.ForeignKey(ClassNumber, on_delete=models.CASCADE, verbose_name='Номер класса')
     name_school = models.CharField('Название школы', max_length=50)
     count = models.IntegerField('Баллов за правильные ответы', default=0)

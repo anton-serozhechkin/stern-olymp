@@ -7,7 +7,7 @@ from django.contrib.auth.models import auth, User
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse, Http404, JsonResponse
-from .forms import *
+from .forms import UserForm, SignUpStudentForm, UserAnswerForm
 from .models import *
 from hashlib import sha256
 from urllib.parse import urlencode, parse_qsl
@@ -274,7 +274,7 @@ def bad_payment(request):
 def documents(request):
     return render(request, 'info/documents.html')
 
-
+"""
 @login_required(login_url='/user/auth/')
 def profile(request):
     student = getting_student(request.user)
@@ -301,6 +301,37 @@ def profile(request):
         if request.POST.get('name_school') and student.name_school != request.POST.get('name_school'):
             student.name_school = request.POST.get('name_school')
             student.save()
+    return render(request, 'profile.html', locals())
+"""
+
+@login_required(login_url='/user/auth/')
+def profile(request):
+    user = User.objects.get(username=request.user.username)
+    student = Student.objects.get(user=request.user)
+    user_in_event = getting_user_in_event(request.user)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=user)
+        student_form = SignUpStudentForm(request.POST, instance=student)
+        if user_form.is_valid() and student_form.is_valid():
+            if user_form.has_changed():
+                instance = user_form.save(commit=False)
+                instance.username = user_form.cleaned_data['username']
+                instance.last_name = user_form.cleaned_data['last_name']
+                instance.first_name = user_form.cleaned_data['first_name']
+                instance.email = user_form.cleaned_data['email']
+                instance.save()
+            if student_form.has_changed():
+                instance = student_form.save(commit=False)
+                instance.telephone_number = student_form.cleaned_data['telephone_number']
+                instance.class_number = student_form.cleaned_data['class_number']
+                instance.name_school = student_form.cleaned_data['name_school']
+                instance.save()
+            return redirect('profile')
+        else:
+            return redirect('profile')
+    else:
+        user_form = UserForm(instance=user)
+        student_form = SignUpStudentForm(instance=student)
     return render(request, 'profile.html', locals())
 
 
