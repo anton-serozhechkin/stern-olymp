@@ -107,7 +107,7 @@ def payment(request):
 
         sign_string - collecting the necessary information for signature
 
-        sign - ready-made encrypted signature
+        sign - readymade encrypted signature
 
     :return sign to unitpay server
     """
