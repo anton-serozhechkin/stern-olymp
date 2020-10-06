@@ -1,0 +1,139 @@
+.final-bg-layer {
+  background-image: url('../images/final-olymp-bg.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  .content {
+    img {
+      position: absolute;
+    }
+
+    #planet-image {
+      width: 160px;
+      height: 130px;
+      top: 25%;
+      left: 15%;
+      animation: planetMove 30s ease-in-out infinite;
+    }
+
+    #rocket-image {
+      width: 200px;
+      height: 200px;
+      bottom: 10%;
+      left: 10%;
+      animation: rocketMove 5s linear infinite;
+    }
+
+    #object-image {
+      width: 150px;
+      height: 185px;
+      right: 15%;
+      top: 35%;
+      animation: objectMove 20s linear infinite;
+    }
+  }
+}
+
+.index-layer {
+  .content {
+    .box {
+      animation: normal;
+      .description {
+        color: whitesmoke;
+        margin-top: 4vh;
+        font-size: 32px;
+        text-align: center;
+      }
+    }
+  }
+
+  .content-layer {
+    .site-visit {
+      p {
+        color: white;
+        a {
+          color: white;
+          cursor: pointer;
+
+          & {
+            position: relative;
+            padding: 0 0.2em;
+
+            &:before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: auto;
+              right: 0;
+              height:8px;
+              width: 0;
+              background:$darkPurple;
+              z-index: -1;
+              transition: all 300ms ease;
+            }
+          }
+
+          &:hover {
+            transition: .2s linear all;
+
+            & {
+              &:before {
+                content: '';
+                width: 100%;
+                left: 0;
+                right: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .header {
+    .header-nav {
+      .header-item {
+        cursor: pointer;
+        & {
+          position: relative;
+          padding: 0 0.2em;
+          &:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: auto;
+            right: 0;
+            height: 14px;
+            width: 0;
+            background: $darkPurple!important;
+            z-index: -1;
+            transition: all 300ms ease;
+          }
+        }
+
+        &:hover {
+          transition: .2s linear all;
+
+          & {
+            &:before {
+              content: '';
+              width: 100%;
+              left: 0;
+              right: 0;
+            }
+          }
+        }
+
+        .header-link {
+          color:white;
+        }
+      }
+    }
+  }
+}
+
+#cosmoman {
+  width: 100%;
+  max-width: 450px;
+  animation: fadeUpDown 2s infinite linear;
+}
+

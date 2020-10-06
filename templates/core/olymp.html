@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Олимпиада - Штерн{% endblock %}
+{% block content %}
+<div class="dialog-layer  olymp">
+    <div class="content">
+        <div class="box">
+            <div class="question-timer">Осталось: 
+                <span id="olymp-timer">
+                    <div class="timer" id="timer">
+                    <script>
+                        setTimeout(function (){
+                            $('#preloader').remove()
+                        },4000)
+                        function timer() {
+                            let deadline = JSON.parse('{{ end_olymp_user|safe }}');
+                                function getTimeRemaining(endtime) {
+                                    let t = Date.parse(endtime) - Date.parse(new Date())
+                                    let seconds = Math.floor((t / 1000) % 60)
+                                    let minutes = Math.floor((t / 1000 / 60) % 60)
+                                    let hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+                                    let days = Math.floor(t / (1000 * 60 * 60 * 24));
+                                    return {
+                                        'total': t,
+                                        'days': days,
+                                        'hours': hours,
+                                        'minutes': minutes,
+                                        'seconds': seconds
+                                    };
+                                }
+                            
+                            function initializeClock(id, endtime) {
+                                let timer = document.getElementById(id);
+                                function updateClock() {
+                                    let t = getTimeRemaining(endtime);
+                                    timer.innerHTML =timer.innerHTML = `${t.days}дн. ${t.hours}ч. ${t.minutes}мин.`
+                                    if (t.total <= 0) {
+                                        clearInterval(timeinterval);
+                                    }
+                                }
+                                updateClock();
+                                let timeInterval = setInterval(updateClock,1000)
+                            }
+                            initializeClock('timer', deadline);
+                        }
+                        timer()
+                    </script>
+                    </div>
+                </span>
+            </div>
+            <div class="question-slider">
+                {% for question in questions %}
+                <div class="slide" data-index="{{ question.id }}">
+                    <img src="{% static 'images/start-olymp-box.svg' %}" alt="">                    
+                    <div class="text">
+                        {{ question.question }}
+                    </div>
+                    <!--место для фотки -->
+                    {% if question.image %}
+                    <img src="{{ question.image.url }}"/>
+                    {% endif %}
+                    <div class="answer">
+                        <form action="{% url 'question' category_slug=category_slug slug=slug %}" method="POST">
+                            {% csrf_token %}
+                            <p>Ответ:</p>
+                            <input name="answer" type="text">
+                            <input name="id" type="hidden" value="{{ question.id }}">
+                            <button type="submit">Ответить</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if nothing_answer %}
+             {{ nothing_answer }}
+            {% endif %}
+            <div class="navigation">
+                <button class="olymp-slider-prev">
+                    <img src="{% static 'images/arrow.svg' %}" alt="">
+                </button>
+                <ul class="olymp-slider-menu">
+                    {% for question in questions %}
+                        <li class="olymp-slider-item">
+                            {{ question.id }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button class="olymp-slider-next">
+                    <img src="{% static 'images/arrow.svg' %}" alt="">
+                </button>
+            </div>
+            <div class="button">
+                <a href="{{ event.get_absolute_url }}">Закончить олимпиаду</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg-layer">
+    <div class="content">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-1" src="{% static 'images/bg-layer-1.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-2" src="{% static 'images/bg-layer-2.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-3" src="{% static 'images/bg-layer-3.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-4" src="{% static 'images/bg-layer-4.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-5" src="{% static 'images/bg-layer-5.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-6" src="{% static 'images/bg-layer-3.svg' %}" alt="">
+    </div>
+</div>
+<div class="template-wrap index-layer olymp-layer">
+    <div class="content-layer">
+        <header class="header" id="header">
+            <ul class="header-nav">
+                <li class="header-item">
+                    Пока ждем начала
+                    <img class="arrow" src="{% static 'images/arrow-1.svg' %}" alt="">
+                </li>
+                <li class="header-item">
+                    <a class="header-link" href="">
+                        Об олимпиаде
+                    </a>
+                </li>
+                <li class="header-item">
+                    <a class="header-link" href="">
+                        {{ request.user.username }}
+                    </a>
+                </li>
+            </ul>
+            <div class="dots-image">
+                <img src="{% static 'images/bg-layer-6.svg' %}" alt="">
+            </div>
+        </header>
+
+        <div class="site-visit">
+             <div class="social-links">
+            <ul class="social-list">
+                <li class="social-item">
+                    <a class="social-link" href="#">
+                        <img class="social-image vk" src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                    </a>
+                </li>
+                <li class="social-item">
+                    <a class="social-link" href="#">
+                        <img class="social-image instagram" src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+            <p>Посетите наш сайт :)</p>
+            <p><a class="site-visit-link" href="">www.schoolofsciences.ru</a></p>
+        </div>
+       
+    </div>
+</div>
+
+<footer class="footer" id="footer">
+    <div class="footer-images">
+        <img class="stripes" src="{% static 'images/bg-layer-7.svg' %}" alt="">
+    </div>
+    {% include "footer-div.html" %}
+</footer>
+<!--<div id="preloader"></div>-->
+<div class="timeout-modal">
+    <div class="content">
+        <div class="image">
+            <img src="{% static 'images/attetion.svg' %}" alt="">
+        </div>
+        <div class="text">
+            <p>Время, отведенное на олимпиаду вышло =С</p>
+            <form action="" method="post">
+                <button type="submit">Сдать олимпиаду</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static 'node_modules/lottie-web/build/player/lottie.js' %}"></script>
+<script>
+    lottie.loadAnimation({
+        container: document.getElementById('preloader'),
+        renderer : 'svg',
+        loop     : true,
+        autoplay : true,
+        path     : '../static/animations/data.json',
+    });
+</script>
+{% endblock content %}

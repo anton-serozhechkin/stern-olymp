@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Олимпиада Штерн - Документы{% endblock %}
+{% block content %}
+<img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
+<div class="desktop-nav">
+    <div class="nav-logo">
+        <a href="">
+            <img src="{% static 'images/shtern-logo.svg' %}" alt="">
+            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
+        </a>
+    </div>
+    <ul class="desktop-nav-list">
+    {% if not request.user.is_authenticated %}
+        <li class="desktop-nav-item desktop-nav-item_active" style="cursor: pointer;">
+            <a class="" href="{% url 'auth_user' %}">
+                <img src="{% static 'images/sign-icon.svg' %}" style="width:29px;" alt="">
+                <span>Вход/Регистрация</span>
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'documents' %}">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    {% else %}
+        <li class="desktop-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/logo-icon.svg' %}" alt="">
+                Главная
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Олимпиада
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/profile-icon.svg' %}" alt="">
+                Профиль
+            </a>
+        </li>
+        <li class="desktop-nav-item desktop-nav-item_active">
+            <a href="{% url 'documents' %}">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    {% endif %}
+    </ul>
+    <div class="desktop-nav-social">
+        <div class="site-link">
+            <a href="//www.schoolofsciences.ru">
+                www.schoolofsciences.ru
+            </a>
+        </div>
+        <ul class="desktop-nav-social_list">
+            <li>
+                <a href="//vk.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="//instagram.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="bg-layer">
+    <div class="content">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-1" src="{% static 'images/bg-layer-1.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-2" src="{% static 'images/bg-layer-2.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-3" src="{% static 'images/bg-layer-3.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-4" src="{% static 'images/bg-layer-4.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-5" src="{% static 'images/bg-layer-5.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-6" src="{% static 'images/bg-layer-3.svg' %}" alt="">
+    </div>
+</div>
+<div class="dialog-layer dialog-layer-documents">
+    <div class="content">
+        <div class="wrapper">
+            <a href="" class="item">
+                <img class="item-image" src="{% static 'images/doc-item-img-1.svg' %}" alt="">
+                <span class="title">
+                    Политика конфиденциальности
+                </span>
+                <img class="item-more" src="{% static 'images/doc-more-link.svg' %}" alt="">
+            </a>
+            <a class="item">
+                <img class="item-image" src="{% static 'images/doc-item-img-2.svg' %}" alt="">
+                <br>
+                <span class="title">
+                    ИНН 770504944805 <br>
+                    ИП Юмашев <br>
+                    Михаил <br>
+                    Юмашев
+                </span>
+            </a>
+            <a href="" class="item">
+                <img class="item-image" src="{% static 'images/doc-item-img-3.svg' %}" alt="">
+                <span class="title">
+                    Пользовательское соглашение
+                </span>
+                <img class="item-more" src="{% static 'images/doc-more-link.svg' %}" alt="">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="template-wrap documents-layer">
+    {% include "links.html" %}
+</div>
+<footer class="footer" id="footer">
+    <div class="footer-images">
+        <img class="penguin penguin-doc" src="{% static 'images/doc-penguin.svg' %}" alt="">
+        <img class="stripes" src="{% static 'images/bg-layer-7.svg' %}" alt="">
+    </div>
+    {% include "footer-div.html" %}
+</footer>
+{% include "mobile-nav.html" %}
+{% endblock content %}

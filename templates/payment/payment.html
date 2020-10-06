@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Оплата олимпиады - Штерн{% endblock %}
+{% block content %}
+<img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
+<div class="desktop-nav">
+    <div class="nav-logo">
+        <a href="">
+            <img src="{% static 'images/shtern-logo.svg' %}" alt="">
+            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
+        </a>
+    </div>
+    <ul class="desktop-nav-list">
+        <li class="desktop-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/logo-icon.svg' %}" alt="">
+                Главная
+            </a>
+        </li>
+        <li class="desktop-nav-item desktop-nav-item_active">
+            <a href="">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Олимпиада
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/profile-icon.svg' %}" alt="">
+                Профиль
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'documents' %}">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    </ul>
+    <div class="desktop-nav-social">
+        <div class="site-link">
+            <a href="//www.schoolofsciences.ru">
+                www.schoolofsciences.ru
+            </a>
+        </div>
+        <ul class="desktop-nav-social_list">
+            <li>
+                <a href="//vk.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="//instagram.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="dialog-layer payment-dialog-layer">
+    <div class="content">
+        <div class="box">
+            <div class="text">
+                <div class="heading ">
+                    <p>Оплатите олимпиаду сейчас <br>
+                        Начните решать в удобное для Вас время
+                    </p>
+                </div>
+                <div class="buttons">
+                    <form class="form-inline" method="POST" action="">
+                        {% csrf_token %}
+                        <input class="reg-button" id="payment-button-id" type="submit" value="Оплатить">
+                    </form>
+                    <div class="button">
+                        <a id="payment-read-more">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img class="payment-image" src="{% static 'images/payment-image.svg' %}" alt="">
+    </div>
+</div>
+<div class="bg-layer payment-bg-layer">
+    <div class="content">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-1" src="{% static 'images/payment-bg-item-2.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-2" src="{% static 'images/payment-bg-item-2.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-3" src="{% static 'images/payment-bg-item-3.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-4" src="{% static 'images/payment-bg-item-4.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-5" src="{% static 'images/payment-bg-item-5.svg' %}" alt="">
+        <img class="bg-timer-layer-item" id="bg-timer-layer-item-6" src="{% static 'images/payment-bg-item-3.svg' %}" alt="">
+    </div>
+</div>
+<div class="template-wrap payment-layer">
+    {% include "links.html" %}
+</div>
+<footer class="footer" id="footer">
+    <div class="footer-images">
+        <img class="stripes" src="{% static 'images/payment-stripes.svg' %}" alt="">
+    </div>
+    {% include "footer-div.html" %}
+</footer>
+<div class="modal-payment" id="modal-payment">
+    <div class="content">
+        <div class="close" id="modal-payment-close">
+            <img src="{% static 'images/plus.svg' %}" alt="">
+        </div>
+      <div style="margin-top: 4vh;" class="middle">
+            <div class="left">
+                <h2 style="color:#b75253; margin-bottom: 1vh">Наша олимпиада проводится уже второй раз</h2>
+                <h2 style="color:#b75253; margin-bottom: .5vh">Она направлена на:</h2>
+                <p>-поддержание ,развитие интереса к олимпиадной <br>математике, логическим задачам и головоломкам <br>
+                </p>
+                <p>-раскрытие потенциала ребенкаи выявление его <br> способностей
+                </p>
+                <h2 style="margin-top:1.2vh;color:#b75253;">
+                    По результатам олимпиады лучшие получат:
+                </h2>
+                <p>- <span style="color:#b75253;">БЕСПЛАТНЫЕ</span> индивидуальные консультации </p>
+                <p>- планирование самостоятельных занятий <br>математикой с подбором задач по темам от <br>
+                    преподавателей ШТЕРН </p>
+                <p style="margin-top:1.2vh;"><span style="color:#b75253;"><sup>*</sup></span> Наши преподаватели обладают большим опытом <br> работы как на Малом мехмате МГУ, так и
+                    на других
+                    <br> ведущих математических кружках и школах <br> Москвы!
+                </p>
+                <h2 style="color:#b75253;margin-top:1.2vh;">После олимпиады каждый участник получит приятные <br>памятные  призы. </h2>
+                <p>Все участники получат файлы с подробным <br> разбором задач и видео лекцию-консультацию по <br>
+                    задачам олимпиады.
+                </p>
+            </div>
+            <div class="right">
+                <div class="unside">
+                    <h2 style="color:#b75253;">Советы перед оплатой:</h2>
+                    <p><span style="color:#b75253;">1.</span> Советуем дождаться полной загрузки страницы <br>после оплаты, а не закрывать, как
+                        только будет <br> сделан платеж. </p>
+                    <p><span style="color:#b75253;">2.</span> Мы всегда находимся в правом нижнем углу <br> сайта и готовы Вам помочь! :)</p>
+                </div>
+                <div class="bottom">
+                    <a href="">К олимпиаде!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "mobile-nav.html" %}
+<script>
+    if(screen.width < 566) {
+       $('.left').append($('.right').html())
+    }
+</script>
+{% endblock content %}

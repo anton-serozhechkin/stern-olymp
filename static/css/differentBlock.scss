@@ -1,0 +1,570 @@
+.bg-layer {
+  position: absolute;
+  z-index: 1;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+
+  .content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+  }
+}
+
+.bg-timer-layer-item {
+  position: absolute;
+}
+#bg-timer-layer-item-1 {
+  width: 85px;
+  right: 25%;
+  bottom: 25%;
+  height: 85px;
+  animation: linear infinite 120s move-1;
+}
+
+#bg-timer-layer-item-2 {
+  width: 175px;
+  right: 30%;
+  bottom: 20%;
+  height: 175px;
+  animation: linear infinite 120s move-2;
+}
+
+#bg-timer-layer-item-3 {
+  width: 175px;
+  right: 10%;
+  bottom: 45%;
+  height: 175px;
+  animation: linear infinite 120s move-3;
+}
+
+#bg-timer-layer-item-4 {
+  width: 300px;
+  right: 75%;
+  bottom: 45%;
+  height: 300px;
+  animation: linear infinite 120s move-4;
+}
+
+#bg-timer-layer-item-5 {
+  width: 100px;
+  right: 50%;
+  bottom: 80%;
+  height: 100px;
+  animation: linear infinite 120s move-5;
+}
+
+#bg-timer-layer-item-6 {
+  width: 175px;
+  right: 85%;
+  bottom: 15%;
+  height: 175px;
+  animation: linear infinite 120s move-6;
+}
+
+.dialog-layer {
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  min-height: 100vh;
+  z-index: 4;
+  position: absolute;
+  background-color: transparent;
+
+  .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .box {
+      width: 39%;
+      position: relative;
+      animation: fadeUpDown 2s infinite linear;
+
+      .text {
+        padding: 5.5vh 0 17.8vh 0;
+        width: 100%;
+        position: absolute;
+
+        .heading {
+          padding: $timerDialogPaddings;
+          text-align: center;
+          text-transform: uppercase;
+          font-size: 44px;
+          font-weight: 500;
+          padding-bottom: 20px;
+        }
+
+        .timer {
+          font-size: 60px;
+          text-align: center;
+          font-weight: 500;
+          padding: $timerDialogPaddings;
+          padding-bottom: 32px;
+        }
+
+        .stripes {
+          padding: $timerDialogPaddings;
+
+          hr {
+            margin: 15px 0;
+            width: 100%;
+            height: 14px;
+            background-color: $lightRed;
+            border: none;
+          }
+        }
+
+        .description {
+          padding: $timerDialogPaddings;
+          font-size: 24px;
+          display: flex;
+          align-items: center;
+          padding-top: 30px;
+
+          .plus {
+            margin: 0 17px 0 auto;
+            height: 35px;
+            width: 35px;
+          }
+
+          p {
+            width: 75%;
+            margin: 0 auto 0 0;
+          }
+        }
+      }
+
+      .index-heading {
+        height: 100%;
+
+        .heading {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          padding: 0 2vw;
+
+          a {
+            margin-bottom: 10vh;
+            color: $darkRed;
+            text-decoration: none;
+
+            span {
+              letter-spacing: 4px;
+            }
+
+            span:first-of-type {
+              font-size: 58px;
+            }
+
+            span:nth-of-type(2) {
+              font-size: 18px;
+            }
+          }
+        }
+
+        .description {
+          padding: 0 2vw;
+
+          p {
+            width: 100%;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  @keyframes fadeUpDown {
+    0% {
+      bottom: -10px;
+    }
+    50% {
+      bottom: 10px;
+    }
+    100% {
+      bottom: -10px;
+    }
+  }
+}
+
+.start-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  z-index: -5;
+  opacity: 0;
+  transition: .2s linear all;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: calc(100vh + 196px);
+  width: 100%;
+
+  .box {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 100px;
+    width: 100%;
+
+    .wrapper {
+      width: 35%;
+      margin: 0 auto;
+      position: relative;
+
+      #start-modal-bg-1 {
+        width: 100%;
+      }
+
+      #start-modal-bg-2 {
+        width: 50%;
+        position: absolute;
+        z-index: 12;
+        left: -10%;
+        top: 10%;
+      }
+
+      #start-modal-bg-3 {
+        left: 10%;
+        top: 17.5%;
+        width: 80%;
+        z-index: 14;
+        position: absolute;
+      }
+
+      .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        z-index: 15;
+        top: 0;
+        position: absolute;
+        width: 100%;
+
+        p {
+          font-size: 54px;
+          color: white;
+          position: relative;
+          right: 5%;
+          margin: 50px;
+        }
+
+        a {
+          cursor: pointer;
+          right: 5%;
+          position: relative;
+          color: white;
+          text-decoration: none;
+          font-size: 54px;
+          text-transform: uppercase;
+
+          & {
+            position: relative;
+            padding: 0 0.2em;
+
+            &:before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: auto;
+              right: 0;
+              height: 50%;
+              width: 0;
+              background: $darkRed;
+              z-index: -1;
+              transition: all 300ms ease;
+            }
+          }
+
+          &:hover {
+            .header-link {
+              color: white;
+              transition: .2s linear all;
+            }
+
+            & {
+              &:before {
+                content: '';
+                width: 100%;
+                left: 0;
+                right: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.start-modal-active {
+  z-index: 10;
+  opacity: 1;
+  transition: all .2s linear;
+}
+
+#preloader {
+  top: 0;
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+}
+
+.timeout-modal {
+  position: absolute;
+  top: 85%;
+  opacity: 0;
+  z-index: -100;
+  right: 3%;
+
+  .content {
+    background-color: $lightRed;
+    border-radius: 15px;
+    padding: 0.1in 0.3in;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 275px;
+    justify-content: space-between;
+
+    .image {
+      img {
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    .text {
+      text-align: center;
+      width: 85%;
+      font-size: 20px;
+      color: white;
+
+      button {
+        margin-top: 12px;
+        background-color: #434040;
+        border-radius: 15px;
+        padding: 6px 12px;
+        color: white;
+        border: none;
+        font-size: 16px;
+        outline: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.timeout-modal-active {
+  opacity: 1;
+  z-index: 10;
+  transition: .2s ease-in-out;
+}
+
+.olymp {
+  .content {
+    .box {
+      .button {
+        a {
+          font-family: "Montserrat-Light";
+
+        }
+      }
+
+      .navigation {
+        ul {
+          li {
+            font-family: "Montserrat-Bold";
+          }
+        }
+      }
+
+      .question-timer {
+        font-family: "Montserrat-Light";
+
+      }
+
+      .question-slider {
+        .slide {
+          .text {
+            font-family: "Montserrat-Light";
+          }
+
+          .answer {
+            p {
+              font-family: "Montserrat-Light";
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
+
+.dialog-layer {
+  .content {
+    .box {
+      .text {
+        .heading {
+          font-family: "Montserrat-Medium";
+
+        }
+
+        #timer {
+          font-family: "Montserrat-Bold";
+          font-size: 48px;
+        }
+
+        .description {
+          font-family: "Montserrat-Light";
+        }
+      }
+    }
+  }
+}
+
+.bad-payment-dialog-layer {
+  .content {
+    .box {
+      .title {
+        font-family: "Montserrat-Regular";
+      }
+
+      .subtitle {
+        font-family: "Montserrat-Light";
+      }
+
+      .button {
+        a {
+          font-family: "Montserrat-Regular";
+        }
+      }
+    }
+  }
+}
+
+.dialog-layer-documents {
+  .content {
+    .wrapper {
+      .item {
+        span {
+          font-family: "Montserrat-Bold";
+
+        }
+      }
+    }
+  }
+}
+
+.sign-modal {
+  font-family: "Montserrat-Regular";
+
+  .content {
+    .modal {
+      .navigation {
+
+      }
+    }
+  }
+}
+
+.index-layer {
+  .content {
+    .box {
+      .description {
+        font-family: "Montserrat-ExtraLight";
+      }
+    }
+  }
+}
+
+.payment-dialog-layer {
+  .content {
+    .box {
+      .text {
+        .heading {
+          font-family: "Montserrat-Bold";
+        }
+
+        .buttons {
+          input {
+            font-family: "Montserrat-ExtraLight";
+          }
+
+          a {
+            font-family: "Montserrat-ExtraLight";
+          }
+        }
+      }
+    }
+  }
+}
+
+.personal-dialog-layer {
+  .content {
+    .profile-wrapper {
+      .left-side {
+        font-family: "Montserrat-Bold";
+
+        .profile-short-info {
+          .settings-button {
+            font-size: 14px;
+          }
+        }
+      }
+
+      .profile-box {
+        .top {
+          font-family: "Montserrat-Bold";
+
+        }
+
+        form {
+          .row {
+            label {
+              font-family: "Montserrat-Regular";
+            }
+
+            input {
+              font-family: "Montserrat-Bold";
+            }
+          }
+
+          button {
+            font-family: "Montserrat-Regular";
+          }
+        }
+      }
+    }
+  }
+}
+
+.suc-payment-dialog-layer {
+  .content {
+    .box {
+      .title {
+        font-family: "Montserrat-SemiBold" !important;
+      }
+
+      .button {
+        a {
+          font-family: "Montserrat-SemiBold" !important;
+
+        }
+      }
+    }
+  }
+}

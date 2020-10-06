@@ -1,0 +1,255 @@
+@keyframes move-1 {
+  0% {
+    right: 25%;
+    bottom: 25%; }
+  5% {
+    right: 50%;
+    bottom: 0; }
+  10% {
+    right: 100%;
+    bottom: 35%; }
+  15% {
+    bottom: 75%;
+    right: 0; }
+  20% {
+    bottom: 0;
+    right: 85%; }
+  25% {
+    right: 100%;
+    bottom: 40%; }
+  30% {
+    bottom: 100%;
+    right: 45%; }
+  35% {
+    right: 0;
+    bottom: 0; }
+  40% {
+    right: 85%;
+    bottom: 100%; }
+  50% {
+    right: 100%;
+    bottom: 75%; }
+  55% {
+    right: 50%;
+    bottom: 0; }
+  60% {
+    bottom: 55%;
+    right: 0; }
+  65% {
+    bottom: 100%;
+    right: 55%; }
+  70% {
+    bottom: 0;
+    right: 75%; }
+  75% {
+    right: 100%;
+    bottom: 20%; }
+  80% {
+    bottom: 100%;
+    right: 85%; }
+  85% {
+    right: 0;
+    bottom: 20%; }
+  90% {
+    right: 100%;
+    bottom: 15%; }
+  95% {
+    right: 10%;
+    bottom: 100%; }
+  100% {
+    bottom: 25%;
+    right: 35%; } }
+@keyframes move-2 {
+  0% {
+    right: 30%;
+    bottom: 20%; }
+  5% {
+    bottom: 100%;
+    right: 80%; }
+  10% {
+    right: 100%;
+    bottom: 60%; }
+  15% {
+    bottom: 0;
+    right: 80%; }
+  20% {
+    right: 0;
+    bottom: 15%; }
+  25% {
+    bottom: 100%;
+    right: 40%; }
+  30% {
+    bottom: 0;
+    right: 70%; }
+  35% {
+    right: 100%;
+    bottom: 100%; }
+  40% {
+    right: 10%;
+    bottom: 0; }
+  45% {
+    bottom: 100%;
+    right: 15%; }
+  50% {
+    bottom: 0;
+    right: 100%; }
+  55% {
+    right: 0;
+    bottom: 15%; }
+  60% {
+    right: 100%;
+    bottom: 25%; }
+  65% {
+    right: 0;
+    bottom: 40%; }
+  70% {
+    right: 100%;
+    bottom: 75%; }
+  75% {
+    bottom: 100%;
+    right: 70%; }
+  80% {
+    bottom: 0;
+    right: 35%; }
+  85% {
+    right: 100%;
+    bottom: 25%; }
+  90% {
+    bottom: 100%;
+    right: 50%; }
+  95% {
+    bottom: 0;
+    right: 0; }
+  100% {
+    right: 30%;
+    bottom: 20%; } }
+@keyframes move-3 {
+  0% {
+    right: 10%;
+    bottom: 45%; }
+  5% {
+    right: 0;
+    bottom: 20%; }
+  10% {
+    bottom: 0;
+    right: 85%; }
+  15% {
+    right: 100%;
+    bottom: 20%; }
+  20% {
+    bottom: 0;
+    right: 20%; }
+  25% {
+    right: 0;
+    bottom: 25%; }
+  30% {
+    right: 100%;
+    bottom: 40%; }
+  35% {
+    right: 0;
+    bottom: 60%; }
+  40% {
+    right: 100%;
+    bottom: 80%; }
+  45% {
+    bottom: 100%;
+    right: 50%; }
+  50% {
+    right: 0;
+    bottom: 65%; }
+  55% {
+    bottom: 45%;
+    right: 100%; }
+  60% {
+    bottom: 0;
+    right: 35%; }
+  65% {
+    right: 0;
+    bottom: 20%; }
+  70% {
+    right: 100%;
+    bottom: 35%; }
+  75% {
+    right: 0;
+    bottom: 65%; }
+  80% {
+    bottom: 100%;
+    right: 100%; }
+  85% {
+    bottom: 0;
+    right: 0; }
+  90% {
+    bottom: 65%;
+    right: 100%; }
+  95% {
+    bottom: 100%;
+    right: 15%; }
+  100% {
+    right: 10%;
+    bottom: 45%; } }
+@keyframes move-6 {
+  0% {
+    right: 85%;
+    bottom: 15%; }
+  5% {
+    right: 0;
+    bottom: 20%; }
+  10% {
+    bottom: 100%;
+    right: 35%; }
+  15% {
+    right: 100%;
+    bottom: 20%; }
+  20% {
+    bottom: 75%;
+    right: 0; }
+  25% {
+    right: 0;
+    bottom: 25%; }
+  30% {
+    right: 100%;
+    bottom: 20%; }
+  35% {
+    right: 100%;
+    bottom: 75%; }
+  40% {
+    right: 100%;
+    bottom: 35%; }
+  45% {
+    bottom: 100%;
+    right: 20%; }
+  50% {
+    right: 80%;
+    bottom: 65%; }
+  55% {
+    bottom: 45%;
+    right: 100%; }
+  60% {
+    bottom: 12%;
+    right: 95%; }
+  65% {
+    right: 0;
+    bottom: 20%; }
+  70% {
+    right: 100%;
+    bottom: 85%; }
+  75% {
+    right: 0;
+    bottom: 65%; }
+  80% {
+    bottom: 100%;
+    right: 100%; }
+  85% {
+    bottom: 0;
+    right: 85%; }
+  90% {
+    bottom: 65%;
+    right: 100%; }
+  95% {
+    bottom: 100%;
+    right: 15%; }
+  100% {
+    right: 85%;
+    bottom: 15%; } }
+
+/*# sourceMappingURL=keyframes.css.map */

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Олимпиада Успешная оплата - Штерн{% endblock %}
+{% block content %}
+<img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
+<div class="desktop-nav">
+    <div class="nav-logo">
+        <a href="">
+            <img src="{% static 'images/shtern-logo.svg' %}" alt="">
+            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
+        </a>
+    </div>  
+    <ul class="desktop-nav-list">
+        <li class="desktop-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/logo-icon.svg' %}" alt="">
+                Главная
+            </a>
+        </li>
+        <li class="desktop-nav-item desktop-nav-item_active">
+            <a href="">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Олимпиада
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/profile-icon.svg' %}" alt="">
+                Профиль
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'documents' %}">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    </ul>
+    <div class="desktop-nav-social">
+        <div class="site-link">
+            <a href="//www.schoolofsciences.ru">
+                www.schoolofsciences.ru
+            </a>
+        </div>
+        <ul class="desktop-nav-social_list">
+            <li>
+                <a href="//vk.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="//instagram.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="dialog-layer suc-payment-dialog-layer">
+    <div class="content">
+        <div class="box">
+            <div class="title">
+                Успешная оплата
+            </div>
+            <div class="button">
+                <a href="{% url 'time_to_start' category_slug=student_in_event.event.category.slug  slug=student_in_event.event.slug %}">к олимпиаде</a>
+            </div>
+        </div>
+    </div>
+</div>
+<img class="wewe-piggie" src="{% static 'images/wewe-piggie.svg' %}" alt="">
+<div class="template-wrap suc-payment-layer">
+    <div class="content-layer">
+        <div class="site-visit" style="z-index: 21;">
+             <div class="social-links" style="z-index: 21;">
+            <ul class="social-list">
+                <li class="social-item">
+                    <a class="social-link" href="//vk.com/schoolofsciences/">
+                        <img class="social-image vk vk-white" src="{% static 'images/social-icon-vk-white.svg' %}" alt="">
+                    </a>
+                </li>
+                <li class="social-item">
+                    <a class="social-link" href="//instagram.com/schoolofsciences/">
+                        <img class="social-image instagram instagram-white" src="{% static 'images/social-icon-instagram-white.svg' %}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+            <p>Посетите наш сайт :)</p>
+            <p>
+                <a class="site-visit-link" href="//schoolofsciences.ru/">
+                    www.schoolofsciences.ru
+                </a>
+            </p>        
+        </div>
+    </div>
+</div>
+<footer class="footer " id="footer">
+    {% include "footer-div.html" %}
+</footer>
+{% include "mobile-nav.html" %}
+{% endblock content %}

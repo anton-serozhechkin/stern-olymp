@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/png" width='16' height='16'>
+		<title>{% block title %}{% endblock %}</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+]		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<!-- Chatra {literal} -->
+		<div id="chatra-wrapper"></div>
+		<script>
+		window.ChatraSetup = {
+		    mode: 'frame',
+		    injectTo: 'chatra-wrapper' /* id блока, в который будет встроен чат */
+		};
+		</script>
+		<script>
+		    (function(d, w, c) {
+		        w.ChatraID = 'p5Q7wY2TmuZanDGnR';
+		        var s = d.createElement('script');
+		        w[c] = w[c] || function() {
+		            (w[c].q = w[c].q || []).push(arguments);
+		        };
+		        s.async = true;
+		        s.src = 'https://call.chatra.io/chatra.js';
+		        if (d.head) d.head.appendChild(s);
+		    })(document, window, 'Chatra');
+		</script>
+		<!-- /Chatra {/literal} -->	
+		<script src="https://kit.fontawesome.com/e1d2fbc59f.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
+	</head>
+	<body>
+		{% block content %}
+		{% endblock %}
+		<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+		<script src="{% static 'node_modules/lottie-web/build/player/lottie.js' %}"></script>
+		<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<script src="{% static 'js/jquery.maskedinput.js' %}"></script>
+		<script src="{% static 'js/bodymovin.min.js' %}"></script>
+		<script src="{% static 'js/index.js' %}"></script>
+		<script src="{% static 'js/olymp-timer.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+	</body>
+</html>

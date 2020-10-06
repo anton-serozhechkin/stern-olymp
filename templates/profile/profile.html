@@ -1,0 +1,190 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Олимпиада Штерн - Личный кабинет{% endblock %}
+{% block content %}
+<img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
+<div class="desktop-nav">
+    <div class="nav-logo">
+        <a href="">
+            <img src="{% static 'images/shtern-logo.svg' %}" alt="">
+            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
+        </a>
+    </div>
+    <ul class="desktop-nav-list">
+        <li class="desktop-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/logo-icon.svg' %}" alt="">
+                Главная
+            </a>
+        </li>
+        {% if user_in_event.paid %}
+        <li class="desktop-nav-item ">
+            <a href="{% url 'payment' %}">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Олимпиада
+            </a>
+        </li>
+        {% else %}
+        <li class="desktop-nav-item ">
+            <a href="{% url 'payment' %}">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Оплатить
+            </a>
+        </li>
+        {% endif %}
+        <li class="desktop-nav-item desktop-nav-item_active">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/profile-icon.svg' %}" alt="">
+                Профиль
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'documents' %}">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    </ul>
+    <div class="desktop-nav-social">
+        <div class="site-link">
+            <a href="//www.schoolofsciences.ru">
+                www.schoolofsciences.ru
+            </a>
+        </div>
+        <ul class="desktop-nav-social_list">
+            <li>
+                <a href="//vk.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="//instagram.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="dialog-layer personal-dialog-layer">
+    <div class="content">
+        <div class="profile-wrapper">
+            <div class="left-side">
+                <div class="profile-short-info">
+                    <div class="profile-image"><img src="{% static 'images/penguin-profile.svg' %}" alt=""></div>
+                    <div class="profile-name">{{ request.user.username }}</div>
+                    <div class="settings-button"><a href=""><img src="{% static 'images/profile-image-1.svg' %}" alt="">Настройки</a></div>
+                </div>
+                <div class="profile-controll">
+                    <a href="#" onclick="history.back();"><img src="{% static 'images/profile-image-2.svg' %}" alt=""> назад</a>
+                    <a href="{% url 'signout' %}"><img src="{% static 'images/profile-image-3.svg' %}" alt=""> выйти</a>
+                </div>
+            </div>
+            <div class="profile-box">
+                <div class="top">
+                    <p>Статус оплаты:</p>
+                    <div class="image">
+                        <div class="bg">
+                            <img src="{% static 'images/payment-status-bg.svg' %}" alt="">
+                        </div>
+                        <div class="result">
+                            {% if user_in_event.paid %}
+                                <img src="{% static 'images/payment-status-suc.svg' %}" alt="">
+                            {% else %}
+                            <img src="{% static 'images/payment-status-bad.svg' %}" alt="">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <label for="profileUserName">{{ user_form.username.help_text }}</label>
+                    </div>
+                    <div class="row">
+                        {{ user_form.username }}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ user_form.email.help_text }}
+                        </div>
+                        <div class="col">
+                            {{ student_form.telephone_number.help_text }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{ user_form.email }}
+                        {{ student_form.telephone_number }}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ user_form.first_name.help_text }}
+                        </div>
+                        <div class="col">
+                            {{ user_form.last_name.help_text }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{ user_form.first_name }}
+                        {{ user_form.last_name }}
+                        {{ user_form.errors }}
+                        {{ user_form.non_field_errors }}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.class_number.help_text }}
+                        </div>
+                        <div class="col">
+                            {{ student_form.name_school.help_text }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{ student_form.class_number }}
+                        {{ student_form.name_school }}
+                    </div>
+                    <button type="submit">Изменить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="template-wrap personal-area-layer">
+    {% include "links.html" %}
+</div>
+<footer class="footer " id="footer">
+    {% include "footer-div.html" %}
+</footer>
+<div class="mobile-nav">
+    <ul class="mobile-nav-list">
+    <div class="mobile-nav-top">
+        <img src="{% static 'images/mobile-nav-figure.png' %}">
+    </div>
+        <li class="mobile-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/mobile-nav-ico-mainPage-inactive.svg' %}" alt="" class="mobile-nav-image">
+            </a>
+        </li>
+        {% if user_in_event.paid %}
+        <li class="mobile-nav-item">
+            <a href="{% url 'payment' %}">
+                <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="к олимпиаде" class="mobile-nav-image" style="position:relative;top:0.6px;">
+            </a>
+        </li>
+        {% else %}
+        <li class="mobile-nav-item">
+            <a href="{% url 'payment' %}">
+                <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="оплатить" class="mobile-nav-image" style="position:relative;top:0.6px;">
+            </a>
+        </li>
+        {% endif %}
+        <li class="mobile-nav-item">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/mobile-nav-ico-profile-active.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
+            </a>
+        </li>
+        <li class="mobile-nav-item" id="chatBtn">
+             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
+        </li>
+    </ul>
+</div>
+{% endblock content %}

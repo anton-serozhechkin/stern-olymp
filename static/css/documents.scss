@@ -1,0 +1,96 @@
+.documents-layer {
+  .site-visit {
+    p {
+      color:#444242;
+    }
+    p a {
+      color:#444242;
+    }
+  }
+  .content-layer {
+    .header {
+      .header-nav {
+        .header-item {
+          &:first-of-type {
+            opacity: 0;
+            z-index: -100;
+          }
+        }
+      }
+    }
+  }
+}
+
+.dialog-layer-documents {
+  .content {
+    .wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 820px;
+      height: 425px;
+      margin-bottom: 10vh;
+
+      .item {
+        text-decoration: none;
+        margin: 0 10px;
+        padding: 4px 10px 30px 10px;
+        background-color: white;
+        position: relative;
+        text-align: center;
+
+        .title {
+          font-size: 20px;
+          font-weight: 700;
+        }
+
+        &:nth-of-type(1) {
+          color: $purple;
+          transition: .2s linear;
+
+          &:hover {
+            transition: .2s linear;
+            transform: scale(1.05);
+          }
+        }
+
+        &:nth-of-type(2) {
+          color: #7599F3;
+        }
+
+        &:nth-of-type(3) {
+          color: $lightRed;
+          transition: .2s linear;
+
+          &:hover {
+            transition: .2s linear;
+            transform: scale(1.05);
+          }
+        }
+
+        .item-image {
+          width: 220px;
+          height: 220px;
+          margin: 0 auto 35px 0;
+        }
+
+        .item-more {
+          height: 30px;
+          width: 30px;
+          position: absolute;
+          bottom: 20px;
+          right: 25px;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  .footer-images {
+    .penguin-doc {
+      left: 43%;
+      width: 16%;
+    }
+  }
+}

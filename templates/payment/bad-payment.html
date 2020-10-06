@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Ошибка оплаты - Штерн{% endblock %}
+{% block content %}
+<img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
+<div class="desktop-nav">
+    <div class="nav-logo">
+        <a href="">
+            <img src="{% static 'images/shtern-logo.svg' %}" alt="">
+            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
+        </a>
+    </div>
+    <ul class="desktop-nav-list">
+        <li class="desktop-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/logo-icon.svg' %}" alt="">
+                Главная
+            </a>
+        </li>
+        <li class="desktop-nav-item desktop-nav-item_active">
+            <a href="">
+                <img src="{% static 'images/olymp-icon.svg' %}" alt="">
+                Олимпиада
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/profile-icon.svg' %}" alt="">
+                Профиль
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'documents' %}">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    </ul>
+    <div class="desktop-nav-social">
+        <div class="site-link">
+            <a href="//www.schoolofsciences.ru">
+                www.schoolofsciences.ru
+            </a>
+        </div>
+        <ul class="desktop-nav-social_list">
+            <li>
+                <a href="//vk.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-vk.svg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="//instagram.com/schoolofsciences/">
+                    <img src="{% static 'images/social-icon-instagram.svg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="dialog-layer bad-payment-dialog-layer">
+    <div class="content">
+        <div class="box">
+            <div class="title">
+                Ошибка оплаты =С
+            </div>
+            <div class="subtitle">
+                <a id="popular-problems">Распостраненные проблемы</a>
+            </div>
+            <div class="button">
+                <a href="{% url 'payment' %}">назад</a>
+            </div>
+            <img src="{% static 'images/penguin-3.svg' %}" alt="">
+        </div>
+    </div>
+</div>
+<div class="template-wrap bad-payment-layer">
+    {% include "links.html" %}
+</div>
+<footer class="footer " id="footer">
+    {% include "footer-div.html" %}
+</footer>
+<div class="popular-problems-modal" id="popular-problems-modal">
+    <div class="content" id="popular-problems-modal-content" data-wow-delay="0" data-wow-duration="0" >
+        <div class="title">
+            популярные проблемы
+            <img class="close" id="popular-problems-modal-close" src="{% static 'images/plus.svg' %}" alt="">
+        </div>
+        <div class="text">
+            <ul>
+                <li>Перед оплатой, советуем проверить баланс банковской карты.</li>
+                <li>Обязательно проверьте корректность вводимых данных</li>
+                <li>Советуем дождаться полной загрузки страницы после оплаты, а не закрывать, как только будет сделан платеж.</li>
+                <li>Не забывайте про комиссию при оплате (к сожалению, мы не можем на это повлиять)</li>
+                <li>Стоит обратить внимание, что мы всегда находимся в правом нижнем углу сайта и готовы Вам помочь! :)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% include "mobile-nav.html" %}
+{% endblock content %}

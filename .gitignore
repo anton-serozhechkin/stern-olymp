@@ -1,0 +1,6 @@
+.env
+__pycache__/
+migrations/
+static/css/.sass-cache/
+static/node_modules
+static/admin
