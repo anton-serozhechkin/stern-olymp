@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 START_SETTING = os.environ.get("PYTHON_ENV")
 
 if START_SETTING == "PRODUCTION":
-    DEBUG = False
+    DEBUG = True
     ALLOWED_HOSTS = ["https://shtern-olymp.ru/", "shtern-olymp.ru"]
 else:
     DEBUG = True
@@ -122,6 +122,7 @@ DESC = 'Оплата за олимпиаду'
 MERCHANT_ID = os.environ.get('MERCHANT_ID')
 
 # Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.beget.com'

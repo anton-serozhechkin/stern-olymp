@@ -44,3 +44,11 @@ def create_new_user_answer(event, question, answer, student):
     else:
         UserAnswer.objects.create(question=question, student=student,
                                   answer=answer, correct=False)
+
+
+def user_started_olymp(user):
+    started = StartOlymp.objects.filter(user=user).exists()
+    if started:
+        return True
+    else:
+        return False

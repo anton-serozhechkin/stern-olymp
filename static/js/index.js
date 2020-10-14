@@ -10,7 +10,7 @@ $('#sign-modal-close').click(function () {
     $('#index-footer-image').animate({'opacity': 0},500)
 })
 $('#signUpSelector').click(function () {
-    $('#signUpForm').css('z-index', '25')
+    $('#signUpForm').css({'z-index':'25','opacity':'1'})
     $('#signInForm').fadeOut('fast', function () {
 
     })
@@ -19,6 +19,7 @@ $('#signUpSelector').click(function () {
     })
 })
 $('#signInSelector').click(function () {
+    $('#signUpForm').css('opacity',0)
     $('#signUpForm').fadeOut('fast', function () {
 
     })
@@ -28,12 +29,13 @@ $('#signInSelector').click(function () {
 })
 
 $('#signUpSelector').click(function () {
+
     $(this).addClass('active')
     $('#signInSelector').removeClass('active')
 })
 
 $('#signInSelector').click(function () {
-    $(this).addClass('active')
+ $(this).addClass('active')
     $('#signUpSelector').removeClass('active')
 })
 
