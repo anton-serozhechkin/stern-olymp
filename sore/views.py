@@ -323,3 +323,22 @@ def succes_payment(request):
     user_in_event.paid = True
     user_in_event.save()
     return render(request, 'payment/success-payment.html', {'user_in_event': user_in_event})
+
+
+def not_found_view(request, exception):
+    exc = {'exception': exception}
+    return render(request, 'errors/404.html', exc)
+
+
+def error_view(request):
+    return render(request, 'errors/500.html')
+
+
+def permission_denied_view(request, exception):
+    exc = {'exception': exception}
+    return render(request, 'errors/403.html', exc)
+
+
+def bad_request_view(request, exception):
+    exc = {'exception': exception}
+    return render(request, 'errors/400.html', exc)

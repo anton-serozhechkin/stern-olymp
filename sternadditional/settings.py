@@ -18,8 +18,8 @@ if START_SETTING == "PRODUCTION":
     DEBUG = True
     ALLOWED_HOSTS = ["https://shtern-olymp.ru/", "shtern-olymp.ru"]
 else:
-    DEBUG = True
-    ALLOWED_HOSTS = []
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']
 
 DATABASES = {
             'default':
