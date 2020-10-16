@@ -117,7 +117,7 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
 
 # Payment olympiad
 SECRET_KEY_PAYMENT = os.environ.get('SECRET_KEY_PAYMENT')
-PRICE = str(10)
+PRICE = 10
 DESC = 'Оплата за олимпиаду'
 MERCHANT_ID = os.environ.get('MERCHANT_ID')
 

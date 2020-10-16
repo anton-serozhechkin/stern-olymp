@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import auth, User
 from django.contrib import messages
 from django.db.models import Q
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponse, Http404, JsonResponse, HttpResponseRedirect
 from .forms import UserForm, SignUpStudentForm, UserAnswerForm
 from .models import *
 from hashlib import sha256
@@ -15,7 +15,7 @@ import json
 import datetime
 from django.contrib.auth import logout
 from .optional_methods import getting_student, user_started_olymp, getting_user_in_event, strftime, finish_time_olymp, create_new_user_answer
-
+from .controllers import PaymentController
 
 def auth_user(request):
     """
@@ -122,7 +122,7 @@ def payment(request):
             params = {
                 'account': account,
                 'desc': settings.DESC,
-                'sum': settings.PRICE,
+                'sum': str(settings.PRICE),
             }
             sign_string = separator.join(['{}'.format(value) for (key, value) in params.items()])
             sign_string += separator + settings.SECRET_KEY_PAYMENT
@@ -236,13 +236,13 @@ def payment_check(request):
     :https://github.com/Underlor/unitpay_python_sdk
 
     """
-    #data = request.GET.copy()
-    #method = data.get('method')
+    controller = PaymentController(request.GET)
+    responce = controller._prepare_responce()
     #if method == 'check':
-        #try:
-            #student = getting_student(data.get('params[account]'))
-            #if student.paid:
-    return {"message": "Вы уже оплатили олимпиаду"}
+    #    #try:
+    #    #    student = getting_student(data.get('params[account]'))
+    #    #    if student.paid:
+    return HttpResponse(responce, content_type='json')
             #else:
                 #return json.dumps({'message': 'Ожидание успешно'})
         #except Student.DoesNotExist:
@@ -255,12 +255,7 @@ def payment_check(request):
             return json.dumps({'message': 'Оплата успешна'})
         except Student.DoesNotExist:
             return json.dumps({'message': 'Неверный обьект обработки. Пользователь не найден'})
-    elif method == 'error':
-        return json.dumps({'message': 'Произошла какая-то ошибка'})
-    else:
-        return json.dumps({'message': 'Метод не поддерживается'})"""
-
-
+    """
 @login_required(login_url='/user/auth/')
 def bad_payment(request):
     """
