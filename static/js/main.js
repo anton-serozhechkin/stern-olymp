@@ -27,7 +27,7 @@ setTimeout(function () {
 },3000)
 $('#chatBtn').click(function () {
     if($('#mobNav-support').attr("type") == 0){
-        $('#chatra-wrapper').css({'bottom':'139px','transition':'.2s linear all','opacity':'1'})
+        $('#chatra-wrapper').css({'bottom':'10%','transition':'.2s linear all','opacity':'1'})
         $('#mobNav-support').attr("src","/static/images/mobNav-support-active.svg")
         setTimeout(function () {
             $('#mobNav-support').attr("type","1")

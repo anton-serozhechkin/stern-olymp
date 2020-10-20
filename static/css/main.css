@@ -2067,6 +2067,7 @@ body {
 .dialog-layer .content .box {
   width: 39%;
   position: relative;
+  text-align:center;
 animation: fadeUpDown 2s infinite linear;
     
 }
@@ -2472,7 +2473,7 @@ animation: fadeUpDown 2s infinite linear;
 .sign-menu-image {
 	width: 100%;
 	height: 300px;
-	position:absolute;
+	position:fixed;
 	z-index: 99;
 	bottom: 0;
 	display: none;
@@ -3573,6 +3574,21 @@ html, body {
     width: 50px;
     height: 50px;
   }
+  .start-modal .box .wrapper .content p {
+    font-size: 54px;
+    color: white;
+    position: relative;
+    right: 5%;
+    margin: 30px;
+}
+  .start-modal .box {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 100px;
+    width: 75%;
+    left: 5%;
+}
   .bg-layer .content #bg-timer-layer-item-2 {
     width: 125px;
     height: 125px;
@@ -4104,6 +4120,21 @@ html, body {
     width: 50px;
     height: 50px;
   }
+  .start-modal .box .wrapper .content p {
+    font-size: 54px;
+    color: white;
+    position: relative;
+    right: 5%;
+    margin: 30px;
+    
+}
+  .start-modal .box {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 100px;
+    width: 85%;
+}
   .bg-layer .content #bg-timer-layer-item-2 {
     width: 125px;
     height: 125px;
@@ -5187,7 +5218,7 @@ input {
 .profile-page .inner .right-side .form {
   width: 100%;
   max-width: 540px;
-  margin: 10vh auto 0 auto;
+  margin: 3vh auto 0 auto;
 }
 .profile-page .inner .right-side .form button {
   background-color: #b75253;
@@ -5563,13 +5594,77 @@ input {
   }
   .final-page .inner {
     width: 90%;
+    height: 78%;
+   display: flex;
+  flex-direction:column;
+  margin: 2.5vh auto 0;
+  justify-content:space-between;
+
+  }
+  .final-page .inner #congratulation-text {
+      width: 75%!important;
   }
   .final-page .inner .text {
-    font-size: 22px;
+    font-size: 18px;
+    
   }
   .final-page .inner img#cosmoman {
     width: 65%;
     display: block;
     margin: 5vh auto 0;
   }
+  .start-modal .box .wrapper .content a, input {
+      font-size: 24px;
+  }
+  .start-modal .box .wrapper .content a {
+      text-transform: capitalize;
+  }
+    
+}
+.custom-dropdown select {
+    width: 100%;
+}
+.modal-payment .content .bottom a{
+  position: relative;
+  padding: 0 0.2em;
+}
+.modal-payment .content .bottom a:hover {
+  transition: 0.2s linear all;
+  color: white;
+}
+.modal-payment .content .bottom a:hover:before {
+  content: "";
+  width: 100%;
+  left: 0;
+  right: 0;
+
+}
+.modal-payment .content .middle .right .bottom a {
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  color: white;
+  font-size: 32px;
+  border: solid 3px #C211A1;
+  border-radius: 40px;
+  padding: 15px 50px;
+}
+.modal-payment .content .middle .right .bottom:first-of-type a {
+  background-color: #C211A1;
+  transition: 0.2s linear all;
+}
+.modal-payment .content .middle .right .bottom:first-of-type a:hover {
+  background-color: transparent;
+  transition: 0.2s linear all;
+}
+.modal-payment .content .middle .right .bottom:last-of-type {
+  transition: 0.2s linear all;
+}
+.modal-payment .content .middle .right .bottom:last-of-type a {
+  background-color: transparent;
+  transition: 0.2s linear all;
+}
+.modal-payment .content .middle .right .bottom:last-of-type a:hover {
+  transition: 0.2s linear all;
+  background-color: #C211A1;
 }

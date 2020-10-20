@@ -16,25 +16,28 @@ import datetime
 from django.contrib.auth import logout
 from .optional_methods import getting_student, user_started_olymp, getting_user_in_event, strftime, finish_time_olymp, create_new_user_answer
 from .controllers import PaymentController
+from django.template.loader import render_to_string
+
 
 def auth_user(request):
     """
         signin/signup view
         using django authenticate mechanism
     """
-    if request.method == 'POST':
-        req = request.POST
-        if 'password_login' in request.POST:
-            username = req.get('username_login')
-            password = req.get('password_login')
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                return redirect('payment')
-            else:
-                messages.info(request, 'Неверный логин или пароль')
-                return redirect('auth_user')
-        else:
+    if request.method == 'GET':
+        req = request.GET
+        if 'pwd' in req:
+            if req.get('pwd', None):
+                username = req.get('username')
+                password = req.get('pwd')
+                user = auth.authenticate(username=username, password=password)
+                if user:
+                    auth.login(request, user)
+                    return redirect('payment')
+                else:
+                    return HttpResponse('bad')
+                    #data = 'Неверный логин или пароль'
+        elif 'telephone_number' in req:
             email = req.get('email', None)
             username = req.get('username', None)
             telephone_number = req.get('telephone_number', None)
@@ -88,7 +91,8 @@ def auth_user(request):
                                            paid=False, date_registration=datetime.datetime.now())
                 auth.login(request, user)
                 return redirect('payment')
-    return render(request, 'core/index.html', locals())
+        
+    return render(request, 'core/index.html')
 
 
 def redirect_index(request):
@@ -238,24 +242,9 @@ def payment_check(request):
     """
     controller = PaymentController(request.GET)
     responce = controller._prepare_responce()
-    #if method == 'check':
-    #    #try:
-    #    #    student = getting_student(data.get('params[account]'))
-    #    #    if student.paid:
     return HttpResponse(responce, content_type='json')
-            #else:
-                #return json.dumps({'message': 'Ожидание успешно'})
-        #except Student.DoesNotExist:
-        #        return json.dumps({'message': 'Неверный обьект обработки. Пользователь не найден'})
-    """elif method == 'pay':
-        try:
-            student = getting_student(data.get('params[account]'))
-            student.paid = True
-            student.save()
-            return json.dumps({'message': 'Оплата успешна'})
-        except Student.DoesNotExist:
-            return json.dumps({'message': 'Неверный обьект обработки. Пользователь не найден'})
-    """
+
+
 @login_required(login_url='/user/auth/')
 def bad_payment(request):
     """
@@ -323,7 +312,7 @@ def succes_payment(request):
     user_in_event.paid = True
     user_in_event.save()
     return render(request, 'payment/success-payment.html', {'user_in_event': user_in_event})
-
+    
 
 def not_found_view(request, exception):
     exc = {'exception': exception}

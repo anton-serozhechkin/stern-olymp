@@ -189,9 +189,8 @@
                 <div class="close"><img src="{% static 'images/plus.svg' %}" id="sign-modal-close" alt=""></div>
             </div>
             <div class="forms" >
-                <form class="singInForm" action="/user/auth/" method="post" name="formtype" id="signInForm">
+                <form class="singInForm" action="" method="get" name="formtype" id="signInForm">
                     <label for="signInUserName">Имя пользователя</label>
-                    {% csrf_token %}
                     <br>
                     <input type="text" name='username_login' id="signInUserName">
                     <br>
@@ -205,11 +204,11 @@
                             </div>    
                         {% endfor %}
                     {% endif %}
-                    <button type="submit" class="ripple" style="position: relative;">go!</button>
+                    <a onclick="logmein()" href="#" class="ripple" style="position: relative;">go</a>
+                    <!--<button type="submit" class="ripple" style="position: relative;">go!</button>-->
                 </form>
-                <form class="singInForm" action="/user/auth/" method="post" name="formtype" id="signUpForm">
+                <form class="singInForm" action="/user/auth/" method="get" name="formtype" id="signUpForm">
                     <div class="row">
-                        {% csrf_token %}
                         <div class="item">
                             <label for="signUpEmail">Логин</label>
                             <br>
@@ -270,8 +269,65 @@
         </div>
     </div>
 </div>
+<script>
+    function logmein() {
+    var username = $.trim($('#signInUserName').val());
+    var pwd = $.trim($('#signInPassword').val());
+        var next = $.trim($('#signInForm button'));
+    $.ajax({
+        url : "/user/auth/",
+        type : "get",
+        data : {
+            username: username,
+            pwd : pwd,
+            next : next
+        },
+    }).done(function(data) {
+        console.log(data)
+        if (data !== "fine") {
+             $(".error-text").text("текст ошибки ")
+        } else {
+             window.location = window.location;
+        }
+    });
+
+}
+logmein();
+</script>
 {% if request.user.is_authenticated %}
-{% include "mobile-nav.html" %}
+<div class="mobile-nav">
+    <ul class="mobile-nav-list">
+    <div class="mobile-nav-top">
+        <img src="{% static 'images/mobile-nav-figure.png' %}">
+    </div>
+        <li class="mobile-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/mobile-nav-ico-mainPage-active.svg' %}" alt="" class="mobile-nav-image">
+            </a>
+        </li>
+        {% if user_in_event.paid %}
+            <li class="mobile-nav-item">
+                <a href="{% url 'time_to_start' category_slug=user_in_event.event.category.slug slug=user_in_event.event.slug %}">
+                    <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="к олимпиаде" class="mobile-nav-image" style="position:relative;top:0.6px;">
+                </a>
+            </li>
+        {% else %}
+            <li class="mobile-nav-item">
+                <a href="{% url 'payment' %}">
+                    <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="оплатить" class="mobile-nav-image" style="position:relative;top:0.6px;">
+                </a>
+            </li>
+        {% endif %}
+        <li class="mobile-nav-item">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/mobile-nav-ico-profile-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
+            </a>
+        </li>
+        <li class="mobile-nav-item" id="chatBtn">
+             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
+        </li>
+    </ul>
+</div>
 {% endif %}
 <div id="preloader-bg" style="width: 100vw; height: 100vh; background: #f6e55c;z-index: 500;position: absolute;top: 0;">
 </div>	
