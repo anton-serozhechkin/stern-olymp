@@ -197,17 +197,12 @@
                     <label for="signInPassword">Пароль</label>
                     <br>
                     <input type="password" name='password_login' id="signInPassword">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="error-text">
-                                {{ message }}
-                            </div>    
-                        {% endfor %}
-                    {% endif %}
-                    <a onclick="logmein()" href="#" class="ripple" style="position: relative;">go</a>
+                    <div class="error-text">
+                    </div>
+                    <a onclick="logmain()" href="#" class="ripple" style="position: relative;">go</a>
                     <!--<button type="submit" class="ripple" style="position: relative;">go!</button>-->
                 </form>
-                <form class="singInForm" action="/user/auth/" method="get" name="formtype" id="signUpForm">
+                <form class="singInForm" action="" method="get" name="formtype" id="signUpForm">
                     <div class="row">
                         <div class="item">
                             <label for="signUpEmail">Логин</label>
@@ -256,21 +251,17 @@
                             <input type="text" name="name_school"id="school">
                         </div>
                     </div>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="error-text">
-                                {{ message }}
-                            </div>    
-                        {% endfor %}
-                    {% endif %}
-                    <button type="submit" class="ripple" style="position: relative;">go!</button>
+                    <div class="error-text">
+                    </div>    
+                    <a onclick="regmain()" href="#" class="ripple" style="position: relative;">go</a>
+                    <!--<button type="submit" class="ripple" style="position: relative;">go!</button>-->
                 </form>
             </div>
         </div>
     </div>
 </div>
 <script>
-    function logmein() {
+    function logmain() {
     var username = $.trim($('#signInUserName').val());
     var pwd = $.trim($('#signInPassword').val());
         var next = $.trim($('#signInForm button'));
@@ -283,16 +274,52 @@
             next : next
         },
     }).done(function(data) {
-        console.log(data)
-        if (data !== "fine") {
-             $(".error-text").text("текст ошибки ")
-        } else {
-             window.location = window.location;
+        console.log(data.msg)
+        console.log(data.status)
+        if (data.status == "error") {
+             $(".error-text").text(data.msg)
+        }
+        if  (data.status == "ok"){
+            window.location='/payment/'
         }
     });
 
 }
-logmein();
+logmain();
+function regmain() {
+    var username = $.trim($('#signUpUserName').val());
+    var password = $.trim($('#signUpPassword').val());
+    var email = $.trim($('#signUpEmail').val());      
+    var telephone_number = $.trim($('#signUpPhone').val());      
+    var first_name = $.trim($('#signUpName').val());       
+    var last_name = $.trim($('#signUpLastName').val());       
+    var class_number = $.trim($('#schoolClass').val());     
+    var name_school = $.trim($('#school').val());     
+    var next = $.trim($('#signInForm button'));
+    $.ajax({
+        url : "/user/auth/",
+        type : "get",
+        data : {
+            username: username,
+            password : password,
+            email: email,
+            telephone_number : telephone_number,
+            first_name: first_name,  
+            last_name : last_name,
+            class_number: class_number,
+            name_school: name_school,
+        },
+    }).done(function(data) {
+        if (data.status == "error") {
+             $(".error-text").text(data.msg)
+        }
+        if  (data.status == "ok"){
+            window.location='/payment/'
+        }
+    });
+
+}
+regmain();
 </script>
 {% if request.user.is_authenticated %}
 <div class="mobile-nav">

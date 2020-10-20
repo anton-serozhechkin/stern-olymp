@@ -33,65 +33,64 @@ def auth_user(request):
                 user = auth.authenticate(username=username, password=password)
                 if user:
                     auth.login(request, user)
-                    return redirect('payment')
+                    return JsonResponse({'status': 'ok'})
                 else:
-                    return HttpResponse('bad')
-                    #data = 'Неверный логин или пароль'
-        elif 'telephone_number' in req:
-            email = req.get('email', None)
-            username = req.get('username', None)
-            telephone_number = req.get('telephone_number', None)
-            password = req.get('password', None)
-            first_name = req.get('first_name', None)
-            last_name = req.get('last_name', None)
-            class_number = req.get('class_number', None)
-            name_school = req.get('name_school', None)
-            if not email or len(email) < 5:
-                messages.info(request, 'Заполните поле электронная почта')
-            elif not username or len(username) < 3:
-                messages.info(request, 'Заполните поле логин')
-            elif not telephone_number:
-                messages.info(request, 'Заполните поле телефонный номер')
-            elif not password:
-                messages.info(request, 'Заполните поле пароль')
-            elif not first_name:
-                messages.info(request, 'Заполните поле имя')
-            elif not last_name:
-                messages.info(request, 'Заполните поле фамилия')
-            elif not class_number or int(class_number) not in range(1, 12):
-                messages.info(request, 'Заполните поле номер класса. Вводить нужно только сам номер(цифрой)')
-            elif not name_school:
-                messages.info(request, 'Заполните поле название школы')
-            elif User.objects.filter(username=username).exists():
-                messages.info(request, 'Логин уже занят')
-            elif User.objects.filter(email=email).exists():
-                messages.info(request, 'Электронная почта уже занята')
-            else:
-                new_user = User.objects.create_user(username=username, email=email,
-                                                    first_name=first_name, last_name=last_name,
-                                                    password=password)
-                user = User.objects.get(username=username)
-                class_number_get = ClassNumber.objects.get(name=class_number)
-                student = Student.objects.create(user=new_user, telephone_number=telephone_number,
-                                                 class_number=class_number_get, name_school=name_school)
-                registration_text = settings.REGISTRATION_TEXT
-                hello_text = registration_text.format(request.POST.get('username'), request.POST.get('password')).encode('utf8')
-                try:
-                    if settings.START_SETTING == "PRODUCTION":
-                        send_mail(
-                            'Регистрация на онлайн олимпиаду',
-                            hello_text,
-                            settings.EMAIL_HOST_USER,
-                            [email, ],
-                            fail_silently=False)
-                except:
-                    pass
-                event_for_user = Event.objects.get(classes__name=class_number_get)
-                create_user_in_event = UserInEvent.objects.create(user=student, event=event_for_user,
-                                           paid=False, date_registration=datetime.datetime.now())
-                auth.login(request, user)
-                return redirect('payment')
-        
+                    return JsonResponse({'status': 'error', 'msg' : 'Неправильный логин или пароль'})
+        if 'telephone_number' in req:
+            if req.get('telephone_number', None):
+                email = req.get('email', None)
+                username = req.get('username', None)
+                telephone_number = req.get('telephone_number', None)
+                password = req.get('password', None)
+                first_name = req.get('first_name', None)
+                last_name = req.get('last_name', None)
+                class_number = req.get('class_number', None)
+                name_school = req.get('name_school', None)
+                if not email or len(email) < 5:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле электронная почта'})
+                elif not username or len(username) < 3:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле логин'})
+                elif not telephone_number:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле телефонный номер'})
+                elif not password:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле пароль'})
+                elif not first_name:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле имя'})
+                elif not last_name:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле фамилия'})
+                elif not class_number or int(class_number) not in range(1, 12):
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле номер класса. Вводить нужно только сам номер(цифрой)'})
+                elif not name_school:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле название школы'})
+                elif User.objects.filter(username=username).exists():
+                    return JsonResponse({'status': 'error', 'msg' : 'Логин уже занят'})
+                elif User.objects.filter(email=email).exists():
+                    return JsonResponse({'status': 'error', 'msg' : 'Электронная почта уже занята'})
+                else:
+                    new_user = User.objects.create_user(username=username, email=email,
+                                                        first_name=first_name, last_name=last_name,
+                                                        password=password)
+                    user = User.objects.get(username=username)
+                    class_number_get = ClassNumber.objects.get(name=class_number)
+                    student = Student.objects.create(user=new_user, telephone_number=telephone_number,
+                                                     class_number=class_number_get, name_school=name_school)
+                    registration_text = settings.REGISTRATION_TEXT
+                    hello_text = registration_text.format(username, password).encode('utf8')
+                    try:
+                        if settings.START_SETTING == "PRODUCTION":
+                            send_mail(
+                                'Регистрация на онлайн олимпиаду',
+                                hello_text,
+                                settings.EMAIL_HOST_USER,
+                                [email, ],
+                                fail_silently=False)
+                    except:
+                        pass
+                    event_for_user = Event.objects.get(classes__name=class_number_get)
+                    create_user_in_event = UserInEvent.objects.create(user=student, event=event_for_user,
+                                               paid=False, date_registration=datetime.datetime.now())
+                    auth.login(request, user)
+                    return JsonResponse({'status': 'ok'})
     return render(request, 'core/index.html')
 
 

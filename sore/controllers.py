@@ -1,7 +1,7 @@
 from django.conf import settings
 import re
 import json
-
+from .models import UserInEvent
 class PaymentController():
     
     def __init__(self, request):
@@ -28,7 +28,10 @@ class PaymentController():
             responce = self.__getErrorHandlerResponse('Сумма оплаты и сумма услуги не совпадают')
         if method == 'check':
             responce =self.__getSuccessHandlerResponse('Check Success. Ready to pay.')
-        elif method == 'pay': 
+        elif method == 'pay':
+            user_in_event = UserInEvent.objects.get(user__user__username=params['account'])
+            user_in_event.paid = True
+            user_in_event.save()
             responce = self.__getSuccessHandlerResponse('Оплата успешна')
         elif method == 'error':
             responce = self.__getSuccessHandlerResponse('Произошла ошибка, попробуйте еще раз')
