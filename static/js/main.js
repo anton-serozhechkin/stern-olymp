@@ -13,50 +13,6 @@ $('#popular-problems-modal-close').click(function (){
     $('#popular-problems-modal').removeClass('popular-problems-modal-active')
     // $('#popular-problems-modal-content').removeClass('wow flipInX')
 })
-$('.vk').hover(function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-vk-hovered.svg')
-}, function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-vk.svg')
-})
-$('.instagram').hover(function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-instagram-hovered.svg')
-}, function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-instagram.svg')
-})
-
-$('.vk-white').hover(function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-vk-hovered.svg')
-}, function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-vk-white.svg')
-})
-$('.instagram-white').hover(function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-instagram-hovered.svg')
-}, function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-instagram-white.svg')
-})
-$('.index-vk').hover(function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-vk-hovered.svg')
-}, function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-vk-white.svg')
-})
-$('.index-instagram').hover(function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-instagram-hovered.svg')
-}, function () {
-    let el = $(this)
-    el.attr('src', '/static/images/social-icon-instagram-white.svg')
-})
-
 $('#payment-read-more').click(function (){
     $('#modal-payment').addClass('modal-payment-active')
 })

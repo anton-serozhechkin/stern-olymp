@@ -65,16 +65,14 @@ class Event(models.Model):
                                                                                   self.data_created,
                                                                                   self.data_event)
 
-    def get_absolute_url(self):
-        return reverse('final', kwargs={'category_slug': self.category.slug, 'slug': self.slug})
-
 
 class UserInEvent(models.Model):
     user = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Пользователь')
     event = models.ForeignKey(Event, on_delete=models.CASCADE, default=1, verbose_name='Мероприятие')
     paid = models.BooleanField(default=False, verbose_name='Оплатил ли пользователь участие')
     date_registration = models.DateTimeField(auto_now_add=True, verbose_name='Дата регистрации на мероприятие')
-
+    finish_olymp = models.BooleanField('Закончил ли пользователь олимпиаду', default=False)
+    
     class Meta:
         verbose_name = 'Пользователь, принимающий участие в мероприятии'
         verbose_name_plural = 'Пользователи, принимающие участие в мероприятиях'

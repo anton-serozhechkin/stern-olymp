@@ -1,12 +1,14 @@
 
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Олимпиада Штерн - Личный кабинет{% endblock %}
+{% block title %}
+    Олимпиада Штерн - Личный кабинет
+{% endblock %}
 {% block content %}
 <img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
 <div class="desktop-nav">
     <div class="nav-logo">
-        <a href="">
+        <a href="{% url 'auth_user' %}">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
             <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
@@ -20,7 +22,7 @@
         </li>
         {% if user_in_event.paid %}
         <li class="desktop-nav-item ">
-            <a href="{% url 'payment' %}">
+            <a href="{% url 'time_to_start' category_slug=user_in_event.event.category.slug slug=user_in_event.event.slug %}">
                 <img src="{% static 'images/olymp-icon.svg' %}" alt="">
                 Олимпиада
             </a>
@@ -66,81 +68,106 @@
         </ul>
     </div>
 </div>
-<div class="dialog-layer personal-dialog-layer">
-    <div class="content">
-        <div class="profile-wrapper">
-            <div class="left-side">
-                <div class="profile-short-info">
-                    <div class="profile-image"><img src="{% static 'images/penguin-profile.svg' %}" alt=""></div>
-                    <div class="profile-name">{{ request.user.username }}</div>
-                    <div class="settings-button"><a href=""><img src="{% static 'images/profile-image-1.svg' %}" alt="">Настройки</a></div>
-                </div>
-                <div class="profile-controll">
-                    <a href="#" onclick="history.back();"><img src="{% static 'images/profile-image-2.svg' %}" alt=""> назад</a>
-                    <a href="{% url 'signout' %}"><img src="{% static 'images/profile-image-3.svg' %}" alt=""> выйти</a>
-                </div>
+<div class="profile-page">
+    <div class="inner">
+        <div class="left-side">
+            <div class="top">
+                <img src="{% static 'images/penguin-profile.svg' %}" alt="">
+                <p>{{ request.user.username }}</p>
             </div>
-            <div class="profile-box">
-                <div class="top">
-                    <p>Статус оплаты:</p>
-                    <div class="image">
-                        <div class="bg">
-                            <img src="{% static 'images/payment-status-bg.svg' %}" alt="">
-                        </div>
-                        <div class="result">
-                            {% if user_in_event.paid %}
-                                <img src="{% static 'images/payment-status-suc.svg' %}" alt="">
-                            {% else %}
+            <div class="bottom">
+                <p><a href="#"  onclick="history.back();">
+                    <img src="{% static 'images/profile-image-2.svg' %}" alt="">
+                    <span>Назад</span>
+                </a></p>
+                <p><a href="{% url 'signout' %}">
+                    <img src="{% static 'images/profile-image-3.svg' %}" alt="">
+                    <span>Выход</span>
+                </a></p>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="top">
+                <p>Статус оплаты: </p>
+                <div class="status">
+                    <div class="bg"><img src="{% static 'images/payment-status-bg.svg' %}" alt=""></div>
+                    <div class="result">
+                        {% if user_in_event.paid %}
+                            <img src="{% static 'images/payment-status-suc.svg' %}" alt="">
+                        {% else %}
                             <img src="{% static 'images/payment-status-bad.svg' %}" alt="">
-                            {% endif %}
-                        </div>
+                        {% endif %}    
                     </div>
                 </div>
+            </div>
+            <div class="form">
                 <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
-                        <label for="profileUserName">{{ user_form.username.help_text }}</label>
-                    </div>
-                    <div class="row">
-                        {{ user_form.username }}
-                    </div>
-                    <div class="row">
                         <div class="col">
-                            {{ user_form.email.help_text }}
-                        </div>
-                        <div class="col">
-                            {{ student_form.telephone_number.help_text }}
+                            <div class="heading">
+                                <label for="profileUserName">{{ user_form.username.help_text }}</label>
+                            </div>
+                            {{ user_form.username }}
                         </div>
                     </div>
                     <div class="row">
-                        {{ user_form.email }}
-                        {{ student_form.telephone_number }}
-                    </div>
-                    <div class="row">
                         <div class="col">
-                            {{ user_form.first_name.help_text }}
+                            <div class="heading">
+                                <label for="profileEMail">{{ user_form.email.help_text }}</label>
+                            </div>
+                            {{ user_form.email }}
                         </div>
                         <div class="col">
-                            {{ user_form.last_name.help_text }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        {{ user_form.first_name }}
-                        {{ user_form.last_name }}
-                        {{ user_form.errors }}
-                        {{ user_form.non_field_errors }}
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            {{ student_form.class_number.help_text }}
-                        </div>
-                        <div class="col">
-                            {{ student_form.name_school.help_text }}
+                            <div class="heading">
+                                <label for="profilePhone">{{ student_form.telephone_number.help_text }}</label>
+                            </div>
+                            {{ student_form.telephone_number }}
                         </div>
                     </div>
                     <div class="row">
-                        {{ student_form.class_number }}
-                        {{ student_form.name_school }}
+                        <div class="col">
+                            <div class="heading">
+                                <label for="profileName">{{ user_form.first_name.help_text }}</label>
+                            </div>
+                            {{ user_form.first_name }}
+                        </div>
+                        <div class="col">
+                            <div class="heading">
+                                <label for="profileLastname">{{ user_form.last_name.help_text }}</label>
+                            </div>
+                            {{ user_form.last_name }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="heading">
+                                <label for="profileClass">{{ student_form.class_number.help_text }}</label>
+                            </div>
+                            <span class="custom-dropdown">
+                                {{ student_form.class_number }}
+                            <!--<select name="class_number" required="" id="id_class_number" style="width: 100%;">
+                                <option class="current" value="{{ student.class_number}}" selected="">{{ student.class_number}}</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                            </select>-->
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="heading">
+                                <label for="profileSchool">{{ student_form.name_school.help_text }}</label>
+                            </div>
+                            {{ student_form.name_school }}
+                        </div>
                     </div>
                     <button type="submit">Изменить</button>
                 </form>
@@ -148,8 +175,153 @@
         </div>
     </div>
 </div>
-<div class="template-wrap personal-area-layer">
-    {% include "links.html" %}
+<style>
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  right: 5%;
+  width: 104%;
+}
+
+.custom-dropdown select {
+  background-color: #b75253;
+  color: #fff;
+  font-size: inherit;
+  padding: .5em;
+  padding-right: 2.5em; 
+  border: 0;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+   appearance: none!important;
+  -webkit-appearance: button;
+}
+
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.custom-dropdown::after {
+  content: "\25BC";
+  height: 1em;
+  font-size: 1.3em;
+  line-height: 1;
+  right: 0.5em;
+  top: 50%;
+  margin-top: -.5em;
+}
+
+.custom-dropdown::before {
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+}
+
+.custom-dropdown select[disabled] {
+  color: rgba(0,0,0,.3);
+}
+
+.custom-dropdown select[disabled]::after {
+  color: rgba(0,0,0,.1);
+}
+
+.custom-dropdown::before {
+  background-color: rgba(0,0,0,.15);
+}
+
+.custom-dropdown::after {
+  color: rgba(0,0,0,.4);
+}
+</style>
+<script>
+
+var colors = ['1abc9c', '2c3e50', '2980b9', '7f8c8d', 'f1c40f', 'd35400', '27ae60'];
+
+colors.each(function (color) {
+  $$('.color-picker')[0].insert(
+    '<div class="square" style="background: #' + color + '"></div>'
+  );
+});
+
+$$('.color-picker')[0].on('click', '.square', function(event, square) {
+  background = square.getStyle('background');
+  $$('.custom-dropdown select').each(function (dropdown) {
+    dropdown.setStyle({'background' : background});
+  });
+});
+</script>
+<div class="template-wrap index-layer index-page-layer">
+    <div class="content-layer">
+        <div class="site-visit" style="z-index: 21;">
+             <div class="social-links" style="z-index: 21;">
+                <ul class="social-list">
+                    <li class="social-item">
+                        <a class="social-link" href="//vk.com/schoolofsciences/">
+                        <!--<img class="social-image vk vk-white" src="{% static 'images/social-icon-vk-white.svg' %}" alt=""> -->
+                        <svg class="social-image dark vk" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.55 50.55">
+                            <defs>
+                                <style>.cls-1{isolation:isolate;}.cls-2{mix-blend-mode:multiply;}.cls-3{fill:#fff;}</style>
+                            </defs>
+                            <title>social-icon-vk</title>
+                            <g class="cls-1">
+                                <g id="Слой_2" data-name="Слой 2">
+                                    <g id="Слой_1-2" data-name="Слой 1">
+                                        <path class="cls-3" d="M61.73,86.77A25.27,25.27,0,1,1,87,61.5,25.3,25.3,0,0,1,61.73,86.77Zm0-48.8A23.53,23.53,0,1,0,85.26,61.5,23.56,23.56,0,0,0,61.73,38Z" transform="translate(-36.45 -36.23)"/>
+                                        <path class="cls-3"
+                                              d="M47.05,54h5.31a.52.52,0,0,1,.47.31,31,31,0,0,0,4.49,7.15.36.36,0,0,0,.64,0c.55-1.36,1.58-4.67-.41-7a.41.41,0,0,1,.15-.65,7.18,7.18,0,0,1,5.91-.1,1.12,1.12,0,0,1,.67,1l.45,6.8a.49.49,0,0,0,.57.48c2.22-.47,3.53-3.79,4.82-7.25a1.08,1.08,0,0,1,1-.72H76a.65.65,0,0,1,.65.75c-.46,2.46-2.93,5.65-4.22,7.18a1.43,1.43,0,0,0,0,1.84L76.8,69a.58.58,0,0,1-.44,1H70.83a1.61,1.61,0,0,1-1.19-.53l-3.86-3.21a.53.53,0,0,0-.77-.07c-.48.58-.44,1.3-.67,2.93a1,1,0,0,1-1,.88H59.52A3.58,3.58,0,0,1,58,69.58c-2.17-1-8.09-4.67-11.42-14.87A.53.53,0,0,1,47.05,54Z"
+                                              transform="translate(-36.45 -36.23)"/>
+                                        <path class="cls-3" d="M61.73,86.77A25.27,25.27,0,1,1,87,61.5,25.3,25.3,0,0,1,61.73,86.77Zm0-48.8A23.53,23.53,0,1,0,85.26,61.5,23.56,23.56,0,0,0,61.73,38Z" transform="translate(-36.45 -36.23)"/>
+                                        <path class="cls-3"
+                                              d="M47.05,54h5.31a.52.52,0,0,1,.47.31,31,31,0,0,0,4.49,7.15.36.36,0,0,0,.64,0c.55-1.36,1.58-4.67-.41-7a.41.41,0,0,1,.15-.65,7.18,7.18,0,0,1,5.91-.1,1.12,1.12,0,0,1,.67,1l.45,6.8a.49.49,0,0,0,.57.48c2.22-.47,3.53-3.79,4.82-7.25a1.08,1.08,0,0,1,1-.72H76a.65.65,0,0,1,.65.75c-.46,2.46-2.93,5.65-4.22,7.18a1.43,1.43,0,0,0,0,1.84L76.8,69a.58.58,0,0,1-.44,1H70.83a1.61,1.61,0,0,1-1.19-.53l-3.86-3.21a.53.53,0,0,0-.77-.07c-.48.58-.44,1.3-.67,2.93a1,1,0,0,1-1,.88H59.52A3.58,3.58,0,0,1,58,69.58c-2.17-1-8.09-4.67-11.42-14.87A.53.53,0,0,1,47.05,54Z"
+                                              transform="translate(-36.45 -36.23)"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </a>
+                </li>
+                <li class="social-item">
+                    <a class="social-link" href="//instagram.com/schoolofsciences/">
+                    <!--<img class="social-image instagram instagram-white"  src="{% static 'images/social-icon-instagram-white.svg' %}" alt="">-->
+                    <svg class="social-image dark instagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.55 50.55">
+                        <defs>
+                            <style>.cls-1{isolation:isolate;}.cls-2{mix-blend-mode:multiply;}.cls-3{fill:#fff;}</style>
+                        </defs>
+                        <title>social-icon-instagram</title>
+                        <g class="cls-1">
+                            <g id="Слой_2" data-name="Слой 2">
+                                <g id="Слой_1-2" data-name="Слой 1">
+                                    <path class="cls-3" d="M61.73,86.89A25.27,25.27,0,1,1,87,61.62,25.31,25.31,0,0,1,61.73,86.89Zm0-48.8A23.53,23.53,0,1,0,85.26,61.62,23.56,23.56,0,0,0,61.73,38.09Z" transform="translate(-36.45 -36.35)"/>
+                                    <path class="cls-3"
+                                          d="M68,75.39H55.45A7.5,7.5,0,0,1,48,67.89V55.34a7.5,7.5,0,0,1,7.49-7.49H68a7.5,7.5,0,0,1,7.5,7.49V67.89A7.5,7.5,0,0,1,68,75.39ZM55.45,49.24a6.11,6.11,0,0,0-6.1,6.1V67.89A6.11,6.11,0,0,0,55.45,74H68a6.11,6.11,0,0,0,6.1-6.11V55.34a6.11,6.11,0,0,0-6.1-6.1Z"
+                                          transform="translate(-36.45 -36.35)"/>
+                                    <path class="cls-3" d="M61.73,70.16a8.54,8.54,0,1,1,8.54-8.54A8.55,8.55,0,0,1,61.73,70.16Zm0-15.69a7.15,7.15,0,1,0,7.14,7.15A7.16,7.16,0,0,0,61.73,54.47Z" transform="translate(-36.45 -36.35)"/>
+                                    <path class="cls-3" d="M71.49,53.49a1.29,1.29,0,1,1-2.57,0,1.29,1.29,0,0,1,2.57,0Z" transform="translate(-36.45 -36.35)"/>
+                                    <path class="cls-3" d="M61.73,86.89A25.27,25.27,0,1,1,87,61.62,25.31,25.31,0,0,1,61.73,86.89Zm0-48.8A23.53,23.53,0,1,0,85.26,61.62,23.56,23.56,0,0,0,61.73,38.09Z" transform="translate(-36.45 -36.35)"/>
+                                    <path class="cls-3"
+                                          d="M68,75.39H55.45A7.5,7.5,0,0,1,48,67.89V55.34a7.5,7.5,0,0,1,7.49-7.49H68a7.5,7.5,0,0,1,7.5,7.49V67.89A7.5,7.5,0,0,1,68,75.39ZM55.45,49.24a6.11,6.11,0,0,0-6.1,6.1V67.89A6.11,6.11,0,0,0,55.45,74H68a6.11,6.11,0,0,0,6.1-6.11V55.34a6.11,6.11,0,0,0-6.1-6.1Z"
+                                          transform="translate(-36.45 -36.35)"/>
+                                    <path class="cls-3" d="M61.73,70.16a8.54,8.54,0,1,1,8.54-8.54A8.55,8.55,0,0,1,61.73,70.16Zm0-15.69a7.15,7.15,0,1,0,7.14,7.15A7.16,7.16,0,0,0,61.73,54.47Z" transform="translate(-36.45 -36.35)"/>
+                                    <path class="cls-3" d="M71.49,53.49a1.29,1.29,0,1,1-2.57,0,1.29,1.29,0,0,1,2.57,0Z" transform="translate(-36.45 -36.35)"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <p>Посетите наш сайт :)</p>
+        <p><a class="site-visit-link" href="//schoolofsciences.ru/">www.schoolofsciences.ru</a></p>    
+        </div>
+    </div>
 </div>
 <footer class="footer " id="footer">
     {% include "footer-div.html" %}
@@ -165,17 +337,17 @@
             </a>
         </li>
         {% if user_in_event.paid %}
-        <li class="mobile-nav-item">
-            <a href="{% url 'payment' %}">
-                <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="к олимпиаде" class="mobile-nav-image" style="position:relative;top:0.6px;">
-            </a>
-        </li>
+            <li class="mobile-nav-item">
+                <a href="{% url 'time_to_start' category_slug=user_in_event.event.category.slug slug=user_in_event.event.slug %}">
+                    <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="к олимпиаде" class="mobile-nav-image" style="position:relative;top:0.6px;">
+                </a>
+            </li>
         {% else %}
-        <li class="mobile-nav-item">
-            <a href="{% url 'payment' %}">
-                <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="оплатить" class="mobile-nav-image" style="position:relative;top:0.6px;">
-            </a>
-        </li>
+            <li class="mobile-nav-item">
+                <a href="{% url 'payment' %}">
+                    <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="оплатить" class="mobile-nav-image" style="position:relative;top:0.6px;">
+                </a>
+            </li>
         {% endif %}
         <li class="mobile-nav-item">
             <a href="{% url 'profile' %}">

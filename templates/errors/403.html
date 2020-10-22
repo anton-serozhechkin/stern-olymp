@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Олимпиада Штерн - Старт Олимпиады
+    Олимпиада Штерн - Ошибка 403
 {% endblock %}
 {% block content %}
 <img class="desktop-nav-arrow" src="{% static 'images/desktop-nav-arrow.png' %}" alt="">
@@ -13,14 +13,32 @@
         </a>
     </div>
     <ul class="desktop-nav-list">
-        <li class="desktop-nav-item ">
+    {% if not request.user.is_authenticated %}
+        <li class="desktop-nav-item desktop-nav-item_active" style="cursor: pointer;">
+            <a class="" href="{% url 'auth_user' %}">
+                <img src="{% static 'images/sign-icon.svg' %}" style="width:29px;" alt="">
+                <span>Вход/Регистрация</span>
+            </a>
+        </li>
+        <li class="desktop-nav-item">
+            <a href="{% url 'documents' %}">
+                <img src="{% static 'images/document-icon.svg' %}" alt="">
+                Документы
+            </a>
+        </li>
+    {% else %}
+        <li class="desktop-nav-item">
             <a href="{% url 'auth_user' %}">
                 <img src="{% static 'images/logo-icon.svg' %}" alt="">
                 Главная
             </a>
         </li>
-        <li class="desktop-nav-item desktop-nav-item_active">
-            <a href="{% url 'time_to_start' category_slug=category_slug slug=slug %}">
+        <li class="desktop-nav-item">
+            {% if user_in_event.paid %}
+                <a href="{% url 'time_to_start' category_slug=user_in_event.event.category.slug slug=user_in_event.event.slug%}">
+            {% else %}
+                <a href="{% url 'payment' %}">
+            {% endif %}
                 <img src="{% static 'images/olymp-icon.svg' %}" alt="">
                 Олимпиада
             </a>
@@ -31,12 +49,13 @@
                 Профиль
             </a>
         </li>
-        <li class="desktop-nav-item">
+        <li class="desktop-nav-item desktop-nav-item_active">
             <a href="{% url 'documents' %}">
                 <img src="{% static 'images/document-icon.svg' %}" alt="">
                 Документы
             </a>
         </li>
+    {% endif %}
     </ul>
     <div class="desktop-nav-social">
         <div class="site-link">
@@ -58,31 +77,6 @@
         </ul>
     </div>
 </div>
-<div class="start-page">
-    <div class="inner">
-        <img src="{% static 'images/start-penguin.svg' %}" alt="" id="penguin">
-        <div class="start-content">
-            <a class="border-animation" href="#" id="start-modal-button">
-                <div class="border-animation__inner">
-                    <span>Начать</span><br><span>олимпиаду</span>
-                </div>
-            </a>
-        </div>
-        <img src="{% static 'images/plus.svg' %}" alt="" id="plus">
-        <img src="{% static 'images/start-lg-dots.svg' %}" alt="" id="start-dots-lg">
-        <img src="{% static 'images/start-dots.svg' %}" alt="" id="start-dots">
-        <img src="{% static 'images/start-stripes.svg' %}" alt="" id="start-stripes-hor">
-        <img src="{% static 'images/start-stripes.svg' %}" alt="" id="start-stripes-ver">
-        <div class="text-box">
-            <div class="description">
-                <p>
-                    <span>Никогда не поздно повторить</span><br>
-                    <span><a id="popular-problems">Правила олимпиады</a></span>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="bg-layer">
     <div class="content">
         <img class="bg-timer-layer-item" id="bg-timer-layer-item-1" src="{% static 'images/bg-layer-1.svg' %}" alt="">
@@ -93,15 +87,23 @@
         <img class="bg-timer-layer-item" id="bg-timer-layer-item-6" src="{% static 'images/bg-layer-3.svg' %}" alt="">
     </div>
 </div>
-<div class="template-wrap index-layer start-layer">
-     <div class="content-layer">
+<div class="dialog-layer dialog-layer-documents">
+    <div class="content">
+        <div class="wrapper">
+            <h1 style="text-align:center;">Ошибка 403</h1>
+            <h2 style="text-align:center;">{{ exc.exception }}</h2>
+        </div>
+    </div>
+</div>
+<div class="template-wrap documents-layer">
+    <div class="content-layer">
         <div class="site-visit" style="z-index: 21;">
-         <div class="social-links" style="z-index: 21;">
-            <ul class="social-list">
-                <li class="social-item">
-                    <a class="social-link" href="//vk.com/schoolofsciences/">
-                    <!--<img class="social-image vk vk-white" src="{% static 'images/social-icon-vk-white.svg' %}" alt=""> -->
-                    <svg class="social-image dark vk" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.55 50.55">
+        <div class="social-links" style="z-index: 21;">
+           <ul class="social-list">
+               <li class="social-item">
+                   <a class="social-link" href="//vk.com/schoolofsciences/">
+                   <!--<img class="social-image vk vk-white" src="{% static 'images/social-icon-vk-white.svg' %}" alt=""> -->
+                   <svg class="social-image dark vk" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.55 50.55">
                         <defs>
                             <style>.cls-1{isolation:isolate;}.cls-2{mix-blend-mode:multiply;}.cls-3{fill:#fff;}</style>
                         </defs>
@@ -125,8 +127,8 @@
                 </li>
                 <li class="social-item">
                     <a class="social-link" href="//instagram.com/schoolofsciences/">
-                    <!--<img class="social-image instagram instagram-white"  src="{% static 'images/social-icon-instagram-white.svg' %}" alt="">-->                        
-                    <svg class="social-image dark instagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.55 50.55">
+                    <!--<img class="social-image instagram instagram-white"  src="{% static 'images/social-icon-instagram-white.svg' %}" alt="">-->
+                        <svg class="social-image dark instagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50.55 50.55">
                             <defs>
                                 <style>.cls-1{isolation:isolate;}.cls-2{mix-blend-mode:multiply;}.cls-3{fill:#fff;}</style>
                             </defs>
@@ -157,59 +159,14 @@
             <p>Посетите наш сайт :)</p>
             <p><a class="site-visit-link" href="//schoolofsciences.ru/">www.schoolofsciences.ru</a></p>
         </div>
-        </div>
+    </div>
 </div>
 <footer class="footer" id="footer">
     <div class="footer-images">
+        <img class="penguin penguin-doc" src="{% static 'images/doc-penguin.svg' %}" alt="">
         <img class="stripes" src="{% static 'images/bg-layer-7.svg' %}" alt="">
     </div>
     {% include "footer-div.html" %}
 </footer>
-<div class="start-modal">
-    <div class="box" id="start-modal-bg">
-        <div class="wrapper">
-            <img id="start-modal-bg-1" src="{% static 'images/start-modal-bg-1.svg' %}" alt="">
-            <img id="start-modal-bg-2" src="{% static 'images/start-modal-bg-2.svg' %}" alt="">
-            <img id="start-modal-bg-3" src="{% static 'images/start-modal-bg-3.svg' %}" alt="">
-            <form method="POST" action="{% url 'start_olympiad' category_slug=category_slug slug=slug %}">
-                {% csrf_token %}
-                <div class="content">
-                    <a id="start-modal-start">
-                    <input type="submit" name = "start-modal-start" value="Да"></a>
-                    <p style="font-family: sans-serif;">Вы уверены?</p>
-                    <a id="start-modal-close" >нет</a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div id="preloader"></div>
-{% include 'mobile-nav.html' %}
-<div class="popular-problems-modal" id="popular-problems-modal">
-    <div class="content" id="popular-problems-modal-content" data-wow-delay="0" data-wow-duration="0" >
-        <div class="title">
-            популярные проблемы
-            <img class="close" id="popular-problems-modal-close" src="{% static 'images/plus.svg' %}" alt="">
-        </div>
-        <div class="text">
-            <ul>
-                <li>Перед оплатой, советуем проверить баланс банковской карты.</li>
-                <li>Обязательно проверьте корректность вводимых данных</li>
-                <li>Советуем дождаться полной загрузки страницы после оплаты, а не закрывать, как только будет сделан платеж.</li>
-                <li>Не забывайте про комиссию при оплате (к сожалению, мы не можем на это повлиять)</li>
-                <li>Стоит обратить внимание, что мы всегда находимся в правом нижнем углу сайта и готовы Вам помочь! :)</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<script src="{% static 'node_modules/lottie-web/build/player/lottie.js' %}"></script>
-<script>
-    lottie.loadAnimation({
-        container: document.getElementById('preloader'),
-        renderer : 'svg',
-        loop     : true,
-        autoplay : true,      
-        path     : '../../static/animations/data.json',
-    });
-</script>
+{% include "mobile-nav.html" %}
 {% endblock content %}

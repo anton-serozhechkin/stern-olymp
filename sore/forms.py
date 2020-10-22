@@ -18,7 +18,7 @@ class UserForm(UserChangeForm):
 
 class SignUpStudentForm(forms.ModelForm):
     telephone_number = forms.CharField(max_length=18, help_text='Телефонный номер')
-    class_number = forms.ModelChoiceField(queryset=ClassNumber.objects.all(), help_text='Год обучения')
+    class_number = forms.ModelChoiceField(queryset=ClassNumber.objects.all(), help_text='Год')
     name_school = forms.CharField(max_length=50, help_text='Название текущего учебного заведения')
 
     class Meta:

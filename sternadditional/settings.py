@@ -15,11 +15,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 START_SETTING = os.environ.get("PYTHON_ENV")
 
 if START_SETTING == "PRODUCTION":
-    DEBUG = False
+    DEBUG = True
     ALLOWED_HOSTS = ["https://shtern-olymp.ru/", "shtern-olymp.ru"]
 else:
-    DEBUG = True
-    ALLOWED_HOSTS = []
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']
 
 DATABASES = {
             'default':
@@ -117,11 +117,12 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
 
 # Payment olympiad
 SECRET_KEY_PAYMENT = os.environ.get('SECRET_KEY_PAYMENT')
-PRICE = str(10)
+PRICE = 10
 DESC = 'Оплата за олимпиаду'
 MERCHANT_ID = os.environ.get('MERCHANT_ID')
 
 # Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.beget.com'
