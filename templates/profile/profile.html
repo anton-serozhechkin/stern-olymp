@@ -10,7 +10,6 @@
     <div class="nav-logo">
         <a href="{% url 'auth_user' %}">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
-            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>
     <ul class="desktop-nav-list">
@@ -141,7 +140,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="heading">
+                            <div class="heading" style="margin-bottom: 5px;">
                                 <label for="profileClass">{{ student_form.class_number.help_text }}</label>
                             </div>
                             <span class="custom-dropdown">
@@ -164,7 +163,7 @@
                         </div>
                         <div class="col">
                             <div class="heading">
-                                <label for="profileSchool">{{ student_form.name_school.help_text }}</label>
+                                <label for="profileSchool">Учебное заведение</label>
                             </div>
                             {{ student_form.name_school }}
                         </div>

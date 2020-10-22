@@ -14,6 +14,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+
 # its works only when debug=False
 handler404 = 'sore.views.not_found_view'
 handler500 = 'sore.views.error_view'

@@ -15,11 +15,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 START_SETTING = os.environ.get("PYTHON_ENV")
 
 if START_SETTING == "PRODUCTION":
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = ["https://shtern-olymp.ru/", "shtern-olymp.ru"]
 else:
-    DEBUG = False
-    ALLOWED_HOSTS = ['*']
+    DEBUG = True
+    ALLOWED_HOSTS = []
 
 DATABASES = {
             'default':

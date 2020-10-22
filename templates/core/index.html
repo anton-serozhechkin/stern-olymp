@@ -17,7 +17,6 @@
     <div class="nav-logo">
         <a href="">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
-            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>
     <ul class="desktop-nav-list">
@@ -84,7 +83,7 @@
 
 <div class="template-wrap index-layer index-page-layer">
     <div class="content-layer">
- <div class="site-visit" style="z-index: 21;">
+ <div class="site-visit" style="z-index: 40;">
          <div class="social-links" style="z-index: 21;">
             <ul class="social-list">
                 <li class="social-item">
@@ -189,27 +188,21 @@
                 <div class="close"><img src="{% static 'images/plus.svg' %}" id="sign-modal-close" alt=""></div>
             </div>
             <div class="forms" >
-                <form class="singInForm" action="/user/auth/" method="post" name="formtype" id="signInForm">
+                <form class="singInForm" action="" method="get" name="formtype" id="signInForm">
                     <label for="signInUserName">Имя пользователя</label>
-                    {% csrf_token %}
                     <br>
                     <input type="text" name='username_login' id="signInUserName">
                     <br>
                     <label for="signInPassword">Пароль</label>
                     <br>
                     <input type="password" name='password_login' id="signInPassword">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="error-text">
-                                {{ message }}
-                            </div>    
-                        {% endfor %}
-                    {% endif %}
-                    <button type="submit" class="ripple" style="position: relative;">go!</button>
+                        <div class="error-text">
+                        </div>    
+                    <a onclick="logmain()" href="#" class="ripple subm" style="position: relative;text-decoration: none;overflow: hidden;color: #fff; display:block;">go!</a>
+                    <!--<button type="submit" class="ripple" style="position: relative;">go!</button>-->
                 </form>
-                <form class="singInForm" action="/user/auth/" method="post" name="formtype" id="signUpForm">
+                <form class="singInForm" action="" method="get" name="formtype" id="signUpForm">
                     <div class="row">
-                        {% csrf_token %}
                         <div class="item">
                             <label for="signUpEmail">Логин</label>
                             <br>
@@ -254,24 +247,114 @@
                         <div class="item">
                             <label for="school">Школа</label>
                             <br>
-                            <input type="text" name="name_school"id="school">
+                            <input type="text" name="name_school" id="school">
                         </div>
                     </div>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="error-text">
-                                {{ message }}
-                            </div>    
-                        {% endfor %}
-                    {% endif %}
-                    <button type="submit" class="ripple" style="position: relative;">go!</button>
+                     <div class="error-text">
+                    </div>    
+                   <a onclick="regmain()" href="#" class="ripple subm" style="position: relative;text-decoration: none;color: #fff;overflow: hidden; display:block;">go!</a>
+                    <!--<button type="submit" class="ripple" style="position: relative;">go!</button>-->
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function logmain() {
+    var username = $.trim($('#signInUserName').val());
+    var pwd = $.trim($('#signInPassword').val());
+        var next = $.trim($('#signInForm button'));
+    $.ajax({
+        url : "/user/auth/",
+        type : "get",
+        data : {
+            username: username,
+            pwd : pwd,
+            next : next
+        },
+    }).done(function(data) {
+        console.log(data.msg)
+        console.log(data.status)
+        if (data.status == "error") {
+             $(".error-text").text(data.msg)
+        }
+        if  (data.status == "ok"){
+            window.location='/payment/'
+        }
+    });
+
+}
+logmain();
+function regmain() {
+    var username = $.trim($('#signUpUserName').val());
+    var password = $.trim($('#signUpPassword').val());
+    var email = $.trim($('#signUpEmail').val());      
+    var telephone_number = $.trim($('#signUpPhone').val());      
+    var first_name = $.trim($('#signUpName').val());       
+    var last_name = $.trim($('#signUpLastName').val());       
+    var class_number = $.trim($('#schoolClass').val());     
+    var name_school = $.trim($('#school').val());     
+    var next = $.trim($('#signInForm button'));
+    $.ajax({
+        url : "/user/auth/",
+        type : "get",
+        data : {
+            username: username,
+            password : password,
+            email: email,
+            telephone_number : telephone_number,
+            first_name: first_name,  
+            last_name : last_name,
+            class_number: class_number,
+            name_school: name_school,
+        },
+    }).done(function(data) {
+        if (data.status == "error") {
+             $(".error-text").text(data.msg)
+        }
+        if  (data.status == "ok"){
+            window.location='/payment/'
+        }
+    });
+
+}
+regmain();
+</script>
 {% if request.user.is_authenticated %}
-{% include "mobile-nav.html" %}
+<div class="mobile-nav">
+    <ul class="mobile-nav-list">
+    <div class="mobile-nav-top">
+        <img src="{% static 'images/mobile-nav-figure.png' %}">
+    </div>
+        <li class="mobile-nav-item">
+            <a href="{% url 'auth_user' %}">
+                <img src="{% static 'images/mobile-nav-ico-mainPage-active.svg' %}" alt="" class="mobile-nav-image">
+            </a>
+        </li>
+        {% if user_in_event.paid %}
+            <li class="mobile-nav-item">
+                <a href="{% url 'time_to_start' category_slug=user_in_event.event.category.slug slug=user_in_event.event.slug %}">
+                    <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="к олимпиаде" class="mobile-nav-image" style="position:relative;top:0.6px;">
+                </a>
+            </li>
+        {% else %}
+            <li class="mobile-nav-item">
+                <a href="{% url 'payment' %}">
+                    <img src="{% static 'images/mobile-nav-ico-toOlymp-inactive.svg' %}" alt="оплатить" class="mobile-nav-image" style="position:relative;top:0.6px;">
+                </a>
+            </li>
+        {% endif %}
+        <li class="mobile-nav-item">
+            <a href="{% url 'profile' %}">
+                <img src="{% static 'images/mobile-nav-ico-profile-inactive.svg' %}" alt="" class="mobile-nav-image" style="position:relative;top:1px;">
+            </a>
+        </li>
+        <li class="mobile-nav-item" id="chatBtn">
+             <img src="{% static 'images/mobNav-support-inactive.svg' %}" alt="" class="mobile-nav-image" id="mobNav-support" type="0" style="position:relative;top:0.7px;">
+        </li>
+    </ul>
+</div>
 {% endif %}
 <div id="preloader-bg" style="width: 100vw; height: 100vh; background: #f6e55c;z-index: 500;position: absolute;top: 0;">
 </div>	

@@ -9,7 +9,6 @@
     <div class="nav-logo">
         <a href="{% url 'auth_user' %}">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
-            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>  
     <ul class="desktop-nav-list">
@@ -68,11 +67,13 @@
     <img src="{% static 'images/rocket.svg' %}" alt="" id="rocket-image"/>
     <img src="{% static 'images/object.svg' %}" alt="" id="object-image"/>
     <div class="inner">
-        <img id="congratulation-text" src="{% static 'images/congratulation-text.svg' %}" alt="">
+        <div class="text">
+            <img id="congratulation-text" src="{% static 'images/congratulation-text.png' %}" style="width:100%;" alt="">
         <div class="text">
             По завершении олимпиады <br>
             мы обязательно пришлем результаты <br>
             Вам на почту
+        </div>
         </div>
         <img src="{% static 'images/cosmoman.svg' %}" alt="" id="cosmoman">
     </div>

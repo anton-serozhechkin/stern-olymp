@@ -9,7 +9,6 @@
     <div class="nav-logo">
         <a href="{% url 'auth_user' %}">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
-            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>
     <ul class="desktop-nav-list">
@@ -63,6 +62,7 @@
             <div class="question-timer">Осталось: 
                 <span id="olymp-timer">
                     <div class="timer" id="timer">
+                        
                     <script>
                         setTimeout(function (){
                             $('#preloader').remove()
@@ -88,9 +88,9 @@
                                 let timer = document.getElementById(id);
                                 function updateClock() {
                                     let t = getTimeRemaining(endtime);
-                                    timer.innerHTML =timer.innerHTML = `${t.days}дн. ${t.hours}ч. ${t.minutes}мин.`
-                                    if (t.total <= 0) {
-                                        clearInterval(timeinterval);
+                                    timer.innerHTML = timer.innerHTML = ` ${t.hours}ч. ${t.minutes}мин.`
+                                    if (t.local <= 0) {
+                                        clearInterval(timeinterval);  
                                     }
                                 }
                                 updateClock();
@@ -103,14 +103,14 @@
                     </div>
                 </span>
             </div>
+            
             <div class="box">
-            <img src="images/start-stripes.svg" alt="" id="start-stripes-hor">
-            <img src="images/start-lg-dots.svg" alt="" id="start-dots-lg">
+            
             {% for question in questions %}
-                <div class="slide" data-index="{{ question.id }}">
+                <div class="slide" data-index="{{ forloop.counter }}">
                    <div class="top">
                         <p>
-                            {{ question.question }}
+                            {{ question.question|safe }}
                         </p>
                         {% if question.image %}
                             <img src="{{ question.image.url }}"/>
@@ -136,8 +136,8 @@
             </button>
             <ul class="olymp-slider-menu">
                 {% for question in questions %}
-                    <li class="olymp-slider-item">
-                        {{ question.id }}
+                    <li class="olymp-slider-item" data-index="{{ forloop.counter }}">
+                        {{ forloop.counter }}
                     </li>
                 {% endfor %}
             </ul>
@@ -347,14 +347,5 @@
     </div>
 </div>
 {% endcomment %}
-<script src="{% static 'node_modules/lottie-web/build/player/lottie.js' %}"></script>
-<script>
-    lottie.loadAnimation({
-        container: document.getElementById('preloader'),
-        renderer : 'svg',
-        loop     : true,
-        autoplay : true,
-        path     : '../../static/animations/data.json',
-    });
-</script>
+
 {% endblock content %}

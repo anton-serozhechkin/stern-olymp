@@ -9,7 +9,6 @@
     <div class="nav-logo">
         <a href="{% url 'auth_user' %}">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
-            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>
     <ul class="desktop-nav-list">
@@ -49,7 +48,7 @@
                 Профиль
             </a>
         </li>
-        <li class="desktop-nav-item desktop-nav-item_active">
+        <li class="desktop-nav-item desktop-nav-item">
             <a href="{% url 'documents' %}">
                 <img src="{% static 'images/document-icon.svg' %}" alt="">
                 Документы
@@ -89,9 +88,19 @@
 </div>
 <div class="dialog-layer dialog-layer-documents">
     <div class="content">
-        <div class="wrapper">
-            <h1 style="text-align:center;">Ошибка 403</h1>
+        <div class="wrapper" style="width: auto;    display: block;">
+            <h1 style="text-align:center;font-size: 6em;font-family:'Montserrat-Bold';color: #444242;">Ошибка 403</h1>
+            <p style="text-align:center;font-size: 4em;font-family:'Montserrat-Bold';color: #444242;">Страница защищена</p>
+            <p style="text-align:center;font-size: 4em;font-family:'Montserrat-Bold';color: #444242;"><a href="#"  onclick="history.back();"><span>Назад</span></a></p>
             <h2 style="text-align:center;">{{ exc.exception }}</h2>
+                        <style>
+            a {
+                color:#444242;
+            }
+            a:visited {
+                color:#444242;
+            }
+            </style>
         </div>
     </div>
 </div>

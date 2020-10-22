@@ -16,79 +16,79 @@ import datetime
 from django.contrib.auth import logout
 from .optional_methods import getting_student, user_started_olymp, getting_user_in_event, strftime, finish_time_olymp, create_new_user_answer
 from .controllers import PaymentController
+from django.template.loader import render_to_string
+
 
 def auth_user(request):
     """
         signin/signup view
         using django authenticate mechanism
     """
-    if request.method == 'POST':
-        req = request.POST
-        if 'password_login' in request.POST:
-            username = req.get('username_login')
-            password = req.get('password_login')
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                return redirect('payment')
-            else:
-                messages.info(request, 'Неверный логин или пароль')
-                return redirect('auth_user')
-        else:
-            email = req.get('email', None)
-            username = req.get('username', None)
-            telephone_number = req.get('telephone_number', None)
-            password = req.get('password', None)
-            first_name = req.get('first_name', None)
-            last_name = req.get('last_name', None)
-            class_number = req.get('class_number', None)
-            name_school = req.get('name_school', None)
-            if not email or len(email) < 5:
-                messages.info(request, 'Заполните поле электронная почта')
-            elif not username or len(username) < 3:
-                messages.info(request, 'Заполните поле логин')
-            elif not telephone_number:
-                messages.info(request, 'Заполните поле телефонный номер')
-            elif not password:
-                messages.info(request, 'Заполните поле пароль')
-            elif not first_name:
-                messages.info(request, 'Заполните поле имя')
-            elif not last_name:
-                messages.info(request, 'Заполните поле фамилия')
-            elif not class_number or int(class_number) not in range(1, 12):
-                messages.info(request, 'Заполните поле номер класса. Вводить нужно только сам номер(цифрой)')
-            elif not name_school:
-                messages.info(request, 'Заполните поле название школы')
-            elif User.objects.filter(username=username).exists():
-                messages.info(request, 'Логин уже занят')
-            elif User.objects.filter(email=email).exists():
-                messages.info(request, 'Электронная почта уже занята')
-            else:
-                new_user = User.objects.create_user(username=username, email=email,
-                                                    first_name=first_name, last_name=last_name,
-                                                    password=password)
-                user = User.objects.get(username=username)
-                class_number_get = ClassNumber.objects.get(name=class_number)
-                student = Student.objects.create(user=new_user, telephone_number=telephone_number,
-                                                 class_number=class_number_get, name_school=name_school)
-                registration_text = settings.REGISTRATION_TEXT
-                hello_text = registration_text.format(request.POST.get('username'), request.POST.get('password')).encode('utf8')
-                try:
+    if request.method == 'GET':
+        req = request.GET
+        if 'pwd' in req:
+            if req.get('pwd', None):
+                username = req.get('username')
+                password = req.get('pwd')
+                user = auth.authenticate(username=username, password=password)
+                if user:
+                    auth.login(request, user)
+                    return JsonResponse({'status': 'ok'})
+                else:
+                    return JsonResponse({'status': 'error', 'msg' : 'Неправильный логин или пароль'})
+        if 'telephone_number' in req:
+            if req.get('telephone_number', None):
+                email = req.get('email', None)
+                username = req.get('username', None)
+                telephone_number = req.get('telephone_number', None)
+                password = req.get('password', None)
+                first_name = req.get('first_name', None)
+                last_name = req.get('last_name', None)
+                class_number = req.get('class_number', None)
+                name_school = req.get('name_school', None)
+                if not email or len(email) < 5:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле электронная почта'})
+                elif not username or len(username) < 3:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле логин'})
+                elif not telephone_number:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле телефонный номер'})
+                elif not password:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле пароль'})
+                elif not first_name:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле имя'})
+                elif not last_name:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле фамилия'})
+                elif not class_number or int(class_number) not in range(1, 12):
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле номер класса. Вводить нужно только сам номер(цифрой)'})
+                elif not name_school:
+                    return JsonResponse({'status': 'error', 'msg' : 'Заполните поле название школы'})
+                elif User.objects.filter(username=username).exists():
+                    return JsonResponse({'status': 'error', 'msg' : 'Логин уже занят'})
+                elif User.objects.filter(email=email).exists():
+                    return JsonResponse({'status': 'error', 'msg' : 'Электронная почта уже занята'})
+                else:
+                    new_user = User.objects.create_user(username=username, email=email,
+                                                        first_name=first_name, last_name=last_name,
+                                                        password=password)
+                    user = User.objects.get(username=username)
+                    class_number_get = ClassNumber.objects.get(name=class_number)
+                    student = Student.objects.create(user=new_user, telephone_number=telephone_number,
+                                                     class_number=class_number_get, name_school=name_school)
+                    registration_text = settings.REGISTRATION_TEXT
+                    hello_text = registration_text.format(username, password)
+                    event_for_user = Event.objects.get(classes__name=class_number_get)
+                    create_user_in_event = UserInEvent.objects.create(user=student, event=event_for_user,
+                                               paid=False, date_registration=datetime.datetime.now())
+                    auth.login(request, user)
                     if settings.START_SETTING == "PRODUCTION":
                         send_mail(
-                            'Регистрация на онлайн олимпиаду',
-                            hello_text,
-                            settings.EMAIL_HOST_USER,
-                            [email, ],
-                            fail_silently=False)
-                except:
-                    pass
-                event_for_user = Event.objects.get(classes__name=class_number_get)
-                create_user_in_event = UserInEvent.objects.create(user=student, event=event_for_user,
-                                           paid=False, date_registration=datetime.datetime.now())
-                auth.login(request, user)
-                return redirect('payment')
-    return render(request, 'core/index.html', locals())
+                        'Регистрация на онлайн олимпиаду',
+                        hello_text,
+                        settings.EMAIL_HOST_USER,
+                        [email, ],
+                        fail_silently=False)
+                    return JsonResponse({'status': 'ok'})
+    return render(request, 'core/index.html')
 
 
 def redirect_index(request):
@@ -185,7 +185,7 @@ def question(request, category_slug, slug):
         if user_in_event.finish_olymp is False:
             student = getting_student(request.user)
             answered_questions = UserAnswer.objects.filter(student=request.user.student)
-            questions = Question.objects.filter(event__slug=slug)[0:4]
+            questions = Question.objects.filter(event__slug=slug)
             event = Event.objects.get(slug=slug)
             finish_time = finish_time_olymp(user=request.user, event=event)
             if finish_time.timestamp() < datetime.datetime.now().timestamp():
@@ -197,7 +197,7 @@ def question(request, category_slug, slug):
             if answered_questions:
                 for answered_question in answered_questions:
                     list_answered_questions.append(answered_question.question.question)
-                questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_answered_questions)[0:4]
+                questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_answered_questions)
             if request.method == "POST":
                 if 'аштшыр-modal-start' in request.POST:
                     return redirect(reverse('final', kwargs={'category_slug': category_slug, 'slug': slug}))
@@ -238,24 +238,9 @@ def payment_check(request):
     """
     controller = PaymentController(request.GET)
     responce = controller._prepare_responce()
-    #if method == 'check':
-    #    #try:
-    #    #    student = getting_student(data.get('params[account]'))
-    #    #    if student.paid:
     return HttpResponse(responce, content_type='json')
-            #else:
-                #return json.dumps({'message': 'Ожидание успешно'})
-        #except Student.DoesNotExist:
-        #        return json.dumps({'message': 'Неверный обьект обработки. Пользователь не найден'})
-    """elif method == 'pay':
-        try:
-            student = getting_student(data.get('params[account]'))
-            student.paid = True
-            student.save()
-            return json.dumps({'message': 'Оплата успешна'})
-        except Student.DoesNotExist:
-            return json.dumps({'message': 'Неверный обьект обработки. Пользователь не найден'})
-    """
+
+
 @login_required(login_url='/user/auth/')
 def bad_payment(request):
     """
@@ -323,7 +308,7 @@ def succes_payment(request):
     user_in_event.paid = True
     user_in_event.save()
     return render(request, 'payment/success-payment.html', {'user_in_event': user_in_event})
-
+    
 
 def not_found_view(request, exception):
     exc = {'exception': exception}
