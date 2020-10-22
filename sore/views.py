@@ -75,21 +75,18 @@ def auth_user(request):
                     student = Student.objects.create(user=new_user, telephone_number=telephone_number,
                                                      class_number=class_number_get, name_school=name_school)
                     registration_text = settings.REGISTRATION_TEXT
-                    hello_text = registration_text.format(username, password).encode('utf8')
-                    try:
-                        if settings.START_SETTING == "PRODUCTION":
-                            send_mail(
-                                'Регистрация на онлайн олимпиаду',
-                                hello_text,
-                                settings.EMAIL_HOST_USER,
-                                [email, ],
-                                fail_silently=False)
-                    except:
-                        pass
+                    hello_text = registration_text.format(username, password)
                     event_for_user = Event.objects.get(classes__name=class_number_get)
                     create_user_in_event = UserInEvent.objects.create(user=student, event=event_for_user,
                                                paid=False, date_registration=datetime.datetime.now())
                     auth.login(request, user)
+                    if settings.START_SETTING == "PRODUCTION":
+                        send_mail(
+                        'Регистрация на онлайн олимпиаду',
+                        hello_text,
+                        settings.EMAIL_HOST_USER,
+                        [email, ],
+                        fail_silently=False)
                     return JsonResponse({'status': 'ok'})
     return render(request, 'core/index.html')
 
@@ -188,7 +185,7 @@ def question(request, category_slug, slug):
         if user_in_event.finish_olymp is False:
             student = getting_student(request.user)
             answered_questions = UserAnswer.objects.filter(student=request.user.student)
-            questions = Question.objects.filter(event__slug=slug)[0:4]
+            questions = Question.objects.filter(event__slug=slug)
             event = Event.objects.get(slug=slug)
             finish_time = finish_time_olymp(user=request.user, event=event)
             if finish_time.timestamp() < datetime.datetime.now().timestamp():
@@ -200,7 +197,7 @@ def question(request, category_slug, slug):
             if answered_questions:
                 for answered_question in answered_questions:
                     list_answered_questions.append(answered_question.question.question)
-                questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_answered_questions)[0:4]
+                questions = Question.objects.filter(event__slug=slug).exclude(question__in=list_answered_questions)
             if request.method == "POST":
                 if 'аштшыр-modal-start' in request.POST:
                     return redirect(reverse('final', kwargs={'category_slug': category_slug, 'slug': slug}))

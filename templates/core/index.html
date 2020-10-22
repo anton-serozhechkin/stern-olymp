@@ -17,7 +17,6 @@
     <div class="nav-logo">
         <a href="">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
-            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>
     <ul class="desktop-nav-list">
@@ -84,7 +83,7 @@
 
 <div class="template-wrap index-layer index-page-layer">
     <div class="content-layer">
- <div class="site-visit" style="z-index: 21;">
+ <div class="site-visit" style="z-index: 40;">
          <div class="social-links" style="z-index: 21;">
             <ul class="social-list">
                 <li class="social-item">
@@ -197,9 +196,9 @@
                     <label for="signInPassword">Пароль</label>
                     <br>
                     <input type="password" name='password_login' id="signInPassword">
-                    <div class="error-text">
-                    </div>
-                    <a onclick="logmain()" href="#" class="ripple" style="position: relative;">go</a>
+                        <div class="error-text">
+                        </div>    
+                    <a onclick="logmain()" href="#" class="ripple subm" style="position: relative;text-decoration: none;overflow: hidden;color: #fff; display:block;">go!</a>
                     <!--<button type="submit" class="ripple" style="position: relative;">go!</button>-->
                 </form>
                 <form class="singInForm" action="" method="get" name="formtype" id="signUpForm">
@@ -248,18 +247,19 @@
                         <div class="item">
                             <label for="school">Школа</label>
                             <br>
-                            <input type="text" name="name_school"id="school">
+                            <input type="text" name="name_school" id="school">
                         </div>
                     </div>
-                    <div class="error-text">
+                     <div class="error-text">
                     </div>    
-                    <a onclick="regmain()" href="#" class="ripple" style="position: relative;">go</a>
+                   <a onclick="regmain()" href="#" class="ripple subm" style="position: relative;text-decoration: none;color: #fff;overflow: hidden; display:block;">go!</a>
                     <!--<button type="submit" class="ripple" style="position: relative;">go!</button>-->
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <script>
     function logmain() {
     var username = $.trim($('#signInUserName').val());

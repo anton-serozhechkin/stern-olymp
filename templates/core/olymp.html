@@ -9,7 +9,6 @@
     <div class="nav-logo">
         <a href="{% url 'auth_user' %}">
             <img src="{% static 'images/shtern-logo.svg' %}" alt="">
-            <img src="{% static 'images/shtern-logo-full.svg' %}" alt="">
         </a>
     </div>
     <ul class="desktop-nav-list">
@@ -89,7 +88,7 @@
                                 let timer = document.getElementById(id);
                                 function updateClock() {
                                     let t = getTimeRemaining(endtime);
-                                    timer.innerHTML = timer.innerHTML = `${t.days}дн. ${t.hours}ч. ${t.minutes}мин.`
+                                    timer.innerHTML = timer.innerHTML = ` ${t.hours}ч. ${t.minutes}мин.`
                                     if (t.local <= 0) {
                                         clearInterval(timeinterval);  
                                     }
@@ -104,14 +103,14 @@
                     </div>
                 </span>
             </div>
+            
             <div class="box">
-            <img src="images/start-stripes.svg" alt="" id="start-stripes-hor">
-            <img src="images/start-lg-dots.svg" alt="" id="start-dots-lg">
+            
             {% for question in questions %}
-                <div class="slide" data-index="{{ question.id }}">
+                <div class="slide" data-index="{{ forloop.counter }}">
                    <div class="top">
                         <p>
-                            {{ question.question }}
+                            {{ question.question|safe }}
                         </p>
                         {% if question.image %}
                             <img src="{{ question.image.url }}"/>
@@ -137,8 +136,8 @@
             </button>
             <ul class="olymp-slider-menu">
                 {% for question in questions %}
-                    <li class="olymp-slider-item">
-                        {{ question.id }}
+                    <li class="olymp-slider-item" data-index="{{ forloop.counter }}">
+                        {{ forloop.counter }}
                     </li>
                 {% endfor %}
             </ul>
