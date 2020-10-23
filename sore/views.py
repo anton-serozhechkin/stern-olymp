@@ -9,8 +9,6 @@ from django.db.models import Q
 from django.http import HttpResponse, Http404, JsonResponse, HttpResponseRedirect
 from .forms import UserForm, SignUpStudentForm, UserAnswerForm
 from .models import *
-from hashlib import sha256
-from urllib.parse import urlencode, parse_qsl
 import json
 import datetime
 from django.contrib.auth import logout
@@ -117,20 +115,9 @@ def payment(request):
     student = UserInEvent.objects.get(user__user=request.user)
     if student.paid is False:
         if request.method == 'POST':
-            account = request.user.username
-            separator = '{up}'
-            params = {
-                'account': account,
-                'desc': settings.DESC,
-                'sum': str(settings.PRICE),
-            }
-            sign_string = separator.join(['{}'.format(value) for (key, value) in params.items()])
-            sign_string += separator + settings.SECRET_KEY_PAYMENT
-            sign = sha256(sign_string.encode('utf-8')).hexdigest()
-            params.update({'signature': sign})
-            params_string = urlencode(params)
-            url = 'https://unitpay.ru/pay/{}?{}'
-            return redirect(url.format(settings.MERCHANT_ID, params_string))
+            controller = PaymentController(request)
+            redirect_url = controller._prepare_post_responce()
+            return redirect(redirect_url)
     else:
         return redirect(reverse('time_to_start', kwargs={'category_slug': student.event.category.slug, 'slug': student.event.slug}))
     return render(request, 'payment/payment.html', locals())
